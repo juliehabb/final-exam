@@ -4,7 +4,6 @@ import VenueCard from "../components/VenueCard";
 const HomePage = () => {
     return (
         <section>
-
             <h1> Home </h1>
             <h2>h</h2>
             <VenueCard
@@ -15,13 +14,9 @@ const HomePage = () => {
               price={90}
               amenities={["Wifi", "Breakfast", "Parking"]}
               href="#"
-            
             />
-
         </section>
-        
     ) 
-    
 }
 
 export default HomePage;
