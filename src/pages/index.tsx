@@ -10,6 +10,7 @@ const HomePage = () => {
       <main>
         <section>
           <SearchBar />
+          
         </section>
         <section className="flex flex-wrap gap-8 justify-center  " >
             <div>
