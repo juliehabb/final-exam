@@ -2,7 +2,8 @@ import React from "react";
 import venues from "../mock-data/venues"
 import VenueCard from "../components/VenueCard";
 import NavBar from "../components/nav";
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../components/Home/SearchBar";
+import SideBar from "../components/Home/SideBar";
 
 const HomePage = () => {
     return (
@@ -10,7 +11,11 @@ const HomePage = () => {
         <section>
           <SearchBar />
         </section>
-        <section className="flex flex-wrap gap-8 justify-center py-8">
+        <section className="flex flex-wrap gap-8 justify-center  " >
+            <div>
+                <SideBar/>
+            </div>
+          <div className="flex flex-wrap gap-8 justify-center py-8">
           {venues.map((venue) => (
             <VenueCard
               key={venue.id}
@@ -23,6 +28,8 @@ const HomePage = () => {
               href={`/${venue.id}`}
             />
           ))}
+          </div>
+
         </section>
       </main>
     );
