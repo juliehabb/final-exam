@@ -1,6 +1,7 @@
 import React from "react";
 import venues from "../mock-data/venues"
 import VenueCard from "../components/VenueCard";
+import NavBar from "../components/nav";
 
 const HomePage = () => {
     return (
@@ -17,7 +18,6 @@ const HomePage = () => {
                             href={`/${venue.id}`}
                           />
     ))}
-        </section>
     );
 }
 
