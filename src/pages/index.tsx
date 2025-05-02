@@ -12,7 +12,7 @@ const HomePage = () => {
           <SearchBar />
           <a href="/venue">Venue</a>
           <a href="/profile">Profile</a>
-          <a href="/profile">Register</a>
+          <a href="/register">Register</a>
           
         </section>
         <section className="flex flex-wrap gap-8 justify-center  " >
