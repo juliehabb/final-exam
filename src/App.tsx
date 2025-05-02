@@ -7,6 +7,7 @@ import NavBar from './components/nav';
 import VenuePage from './pages/venue';
 import ProfilePage from './pages/ProfilePage';
 import RegisterPage from './pages/register';
+import LoginPage from './pages/login';
 
 function App() {
   return (
@@ -15,8 +16,10 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/register' element={<RegisterPage />} />
+        <Route path='/login' element={<LoginPage />} />
         <Route path='/venue' element={<VenuePage />} />
         <Route path='/profile' element={<ProfilePage />} />
+        
       </Routes>
     </>
   );
