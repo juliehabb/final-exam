@@ -1,8 +1,9 @@
 import React from "react";
 import PhotoGallery from "../components/PhotoGallery";
+import VenueDetails from "../components/Home/VenueDetails/venuePage";
 
 const VenuePage = () => {
-    //Moxk images
+    //Mock images
     const images = [
         "https://placehold.co/600x400?text=hey",
         "https://placehold.co/600x400?text=2",
@@ -13,9 +14,10 @@ const VenuePage = () => {
 
 
     return (
-        <main>
+        <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
             <section>
             <PhotoGallery images={images}/>
+            <VenueDetails></VenueDetails>
             </section>
             
 
