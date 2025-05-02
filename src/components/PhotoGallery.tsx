@@ -19,7 +19,7 @@ export default function PhotoGallery({ images }: PhotoGalleryProps) {
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="w-full p-6">
       <div className="flex flex-col lg:flex-row gap-4 bg-gray-50 rounded-2xl overflow-hidden">
         {/* Big featured image */}
         <div
