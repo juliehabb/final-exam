@@ -21,9 +21,9 @@ export default function VenueDetails() {
       <main className="p-6 space-y-6">
 
   
-        {/* Info- og booking-panel */}
+        {/* Info- and booking-panel */}
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Venstrekort: Boliginfo */}
+          {/* Left card: Venue Info */}
           <div className="bg-white p-6 rounded-2xl shadow-lg flex-1">
             <div className="flex justify-between items-start">
               <h1 className="text-2xl font-bold">{title}</h1>
@@ -66,11 +66,11 @@ export default function VenueDetails() {
             </div>
           </div>
   
-          {/* Høyrrekort: Booking */}
+          {/* Right card: Booking */}
           <div className="bg-white p-6 rounded-2xl shadow-lg flex-1">
             <h2 className="text-xl font-semibold mb-4">Book your stay</h2>
   
-            {/* Placeholder for kalender */}
+            {/* Placeholder for calender */}
             <div className="h-64 bg-gray-100 rounded-xl mb-6 flex items-center justify-center">
               Calendar
             </div>
