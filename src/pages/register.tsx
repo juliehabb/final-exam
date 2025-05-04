@@ -9,12 +9,13 @@ export default function RegisterPage() {
     const { register, loading, error} = useRegister();
 
     const [name, setname] = useState("");
-    const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [bio, setBio] = useState("");
+    const [venueManager, setVenueManager] = useState(false);
 
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     // TODO: call your register API with { username, password, email, bio }
     console.log("Register:", { username, password, email, bio });
