@@ -39,13 +39,14 @@ export default function HomePage() {
                 {venues.map((v) => (
                   <VenueCard
                     key={v.id}
+                    id={v.id}
                     image={v.media[0]?.url || ""}
                     title={v.name}
                     location={`${v.location.city}, ${v.location.country}`}
                     rating={v.rating}
                     price={v.price}
                     amenities={amenitiesFrom(v.meta)}
-                    href={`/venue/${v.id}`}
+                    
                   />
                 ))}
               </div>
