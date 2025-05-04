@@ -5,12 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { RegisterData } from "../api/auth";
 
 export default function RegisterPage() {
+    const navigate = useNavigate();
+    const { register, loading, error} = useRegister();
 
-    
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [bio, setBio] = useState("");
+    const [name, setname] = useState("");
+    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [bio, setBio] = useState("");
+
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -28,9 +30,9 @@ export default function RegisterPage() {
     >
       <input
         type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
+        value={name}
+        onChange={(e) => setname(e.target.value)}
+        placeholder="name"
         required
         className="w-full px-4 py-2 border rounded"
       />
