@@ -2,7 +2,7 @@ import React from "react";
 import PhotoGallery from "../components/PhotoGallery";
 import VenueDetails from "../components/Home/VenueDetails/venuePage";
 
-const VenuePage = () => {
+export const VenuePage = () => {
     //Mock images
     const images = [
         "https://placehold.co/600x400?text=hey",
