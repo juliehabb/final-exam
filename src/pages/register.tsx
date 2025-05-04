@@ -2,8 +2,10 @@ import React, { FormEvent, useState } from "react";
 import { AuthForm } from "../components/authform";
 import { useRegister } from "../hooks/useRegister";
 import { RegisterData } from "../api/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
+    const navigate = useNavigate();
     const { register, loading, error} = useRegister();
 
     const [name, setName] = useState("");
@@ -21,6 +23,7 @@ export default function RegisterPage() {
         const result = await register(payload);
         console.log("Full registration result:", result);
         console.log("registered user (data)", result.data);
+        navigate("/login");
         
     } catch (err) {
         console.error("Registration error:", err)
