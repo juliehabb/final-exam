@@ -1,5 +1,4 @@
-
-// 1) The shape of the data sent when registering
+// 1) Data you send when registering
 export type RegisterData = {
     name: string;
     email: string;
@@ -8,23 +7,22 @@ export type RegisterData = {
     venueManager?: boolean;
   };
   
-  // 2) The shape of a user profile as the API returns it
+  // 2) User profile shape returned by the API
   export type UserProfile = {
     id: number;
     name: string;
     email: string;
     bio?: string;
     venueManager?: boolean;
-    // add avatar/banner?
   };
   
-  // 3) The full response from POST /auth/register
+  // 3) Full response from POST /auth/register
   export type RegisterResponse = {
     data: UserProfile;
     meta: Record<string, unknown>;
   };
   
-  // 4) Base URL for the v2 API
+  // 4) Base URL for v2 API
   const BASE_URL = "https://v2.api.noroff.dev";
   
   // 5) Perform the registration call
@@ -37,11 +35,10 @@ export type RegisterData = {
       body: JSON.stringify(payload),
     });
   
-    //  parse JSON so one can inspect errors
     const json = await res.json();
   
     if (!res.ok) {
-      // Build a combined error message if the API returned validation errors
+      // Gather any validation error messages
       const apiErrors = Array.isArray((json as any).errors)
         ? (json as any).errors.map((e: any) => e.message).join("; ")
         : null;
@@ -51,4 +48,3 @@ export type RegisterData = {
   
     return json as RegisterResponse;
   }
-  

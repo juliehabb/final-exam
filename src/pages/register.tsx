@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import { AuthForm } from "../components/authform";
 import { useRegister } from "../hooks/useRegister";
-import { RegisterData } from "../api/auth";
+import { RegisterData } from "../api/auth/register";
 import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {

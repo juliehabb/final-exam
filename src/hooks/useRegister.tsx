@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { registerApi, RegisterData, RegisterResponse } from "../api/auth";
+import { registerApi, RegisterData, RegisterResponse } from "../api/auth/register";
 
 export function useRegister() {
     const [loading, setLoading] = useState(false);
