@@ -1,7 +1,12 @@
 import React, { FormEvent, useState } from "react";
 import { AuthForm } from "../components/authform";
+import { useRegister } from "../hooks/useRegister";
+import { useNavigate } from "react-router-dom";
+import { RegisterData } from "../api/auth";
 
 export default function RegisterPage() {
+
+    
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
