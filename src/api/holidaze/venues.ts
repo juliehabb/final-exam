@@ -8,6 +8,13 @@ export type Venue = {
   media: { url: string; alt: string }[];
   location: { city: string; country: string };
   meta: { wifi: boolean; parking: boolean; breakfast: boolean; pets: boolean };
+  owner: {
+    email: string;
+    name?: string;
+    bio?: string;
+    avatar?: { url: string; alt?: string };
+    banner?: { url: string; alt?: string };
+  };
 };
 
 // Response from GET /holidaze/venues
@@ -20,7 +27,7 @@ export type VenuesResponse = {
 export type NewVenueData = {
   name: string;
   description: string;
-  media: string[];       // array of image URLs
+  media: {url: string, alt: string}[];       // array of image URLs
   price: number;
   maxGuests: number;
   rating: number;
