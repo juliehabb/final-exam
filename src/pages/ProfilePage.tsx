@@ -3,6 +3,7 @@ import { ProfileHeader } from "../components/Profile/ProfileHeader";
 import { Panel } from "../components/Profile/Panel";
 import { ListItem } from "../components/Profile/ListItem";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function ProfilePage() {
   // Mock data
@@ -47,12 +48,12 @@ export default function ProfilePage() {
         <Panel
           title="Your venues"
           actions={
-            <button
-              onClick={handleNewVenue}
-              className="flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-lg"
+            <Link to="/venues/new"
+            className="flex items-center gap-2 px-4 py-2 bg-blue-400 text-black rounded-lg"
             >
-              <FaPlus /> New
-            </button>
+              <FaPlus /> CreateNew Venue
+            </Link>
+
           }
         >
           {venues.map((v) => (
