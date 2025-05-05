@@ -22,6 +22,7 @@ export default function LoginPage() {
       // Persist for future requests
       localStorage.setItem("token", loginResult.data.accessToken);
       localStorage.setItem("apiKey", apiKey);
+      localStorage.setItem("user", JSON.stringify(loginResult.data));
 
       // Redirect to your app’s main page
       navigate("/");
