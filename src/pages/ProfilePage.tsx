@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ProfileHeader } from "../components/Profile/ProfileHeader";
 import { Panel } from "../components/Profile/Panel";
 import { ListItem } from "../components/Profile/ListItem";
@@ -16,6 +16,14 @@ export default function ProfilePage() {
   // 2) fetch only this user’s venues
   const { venues: myVenues, loading, error } = useUserVenues(email);
 
+  useEffect(() => {
+    console.log( "Current user object", user);
+    console.log("All fetched venues (filtered(", myVenues);
+    myVenues.forEach((v: Venue) => {
+      console.log(` Venue ${v.id} owner =`, v.owner);
+    });
+  }, [user, myVenues]);
+  
     // 3) mock bookings (or fetch the same way if you implement bookings API)
     const bookings = [
       { id: 1, image: "...", title: "Seaview Villa", dates: "12–16 May" },
