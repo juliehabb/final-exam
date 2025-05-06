@@ -1,20 +1,23 @@
-import { useMemo } from "react";
-import { useVenues } from "./useVenues";
-import type { Venue } from "../api/holidaze/venues";
+import { useState, useEffect } from "react"
+import {
+  getVenuesByProfile,
+  Venue,
+  VenuesResponse,
+} from "../api/holidaze/venues"
 
-/**
- * Returns only the venues whose `owner.email` matches the given email.
- */
-export function useUserVenues(email?: string) {
-  const { venues, loading, error} = useVenues();
+export function useUserVenues(profileName?: string) {
+  const [venues, setVenues]     = useState<Venue[]>([])
+  const [loading, setLoading]   = useState<boolean>(false)
+  const [error, setError]       = useState<string | null>(null)
 
-  const userVenues = useMemo(
-    () =>
-      email
-      ? venues.filter((v: Venue) => v.owner?.email === email)
-      : [],
-    [venues, email]
-  );
+  useEffect(() => {
+    if (!profileName) return
+    setLoading(true)
+    getVenuesByProfile(profileName)
+      .then((res: VenuesResponse) => setVenues(res.data))
+      .catch((err: Error) => setError(err.message))
+      .finally(() => setLoading(false))
+  }, [profileName])
 
-  return { venues: userVenues, loading, error};
+  return { venues, loading, error }
 }
