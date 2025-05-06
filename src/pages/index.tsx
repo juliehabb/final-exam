@@ -1,5 +1,5 @@
 import React from "react";
-import { useVenues } from "../hooks/useCenues";
+import { useVenues } from "../hooks/useVenues";
 import VenueCard from "../components/VenueCard";
 import NavBar from "../components/nav";
 import SearchBar from "../components/Home/SearchBar";
