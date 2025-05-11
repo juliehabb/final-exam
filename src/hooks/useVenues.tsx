@@ -7,12 +7,22 @@ export function useVenues() {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-      setLoading(true);
-      getAllVenues()
-        .then((res: VenuesResponse) => setVenues(res.data))
-        .catch(err => setError(err.message))
-        .finally(() => setLoading(false));
+        let cancelled = false;
+        getAllVenues()
+          .then((res) => {
+            if (!cancelled) {
+                setVenues(res.data);
+                setLoading(false);
+            }
+          })
+          .catch((err: any) => {
+            if (!cancelled) {
+                setError(err.message);
+                setLoading(false);
+            }
+          });
+        return () => { cancelled = true; };
     }, []);
-  
+
     return { venues, loading, error};
 }
