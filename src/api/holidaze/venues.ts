@@ -113,3 +113,17 @@ export async function getVenuesByProfile(
   if (!res.ok) throw new Error((json as any).message || `Failed to fetch ${profileName}’s venues`)
   return json as VenuesResponse
 }
+
+export async function updateVenue(id: string, payload: NewVenueData): Promise<CreateVenueResponse> {
+  const res = await fetch(`${BASE}/venues/${id}`, {
+    method: "PUT",
+    headers: authHeaders(),
+    body: JSON.stringify(payload),
+  });
+  const json = await res.json();
+  if (!res.ok) {
+    const msg = (json as any).message || `Failed to update venue (${res.status})`;
+    throw new Error(msg);
+  }
+  return json as CreateVenueResponse;
+}
