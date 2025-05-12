@@ -1,26 +1,51 @@
-import React from "react"
+
+import React, { useState} from "react"
 import { Link, useNavigate } from "react-router-dom"
+
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa"
 import { ProfileHeader } from "../components/Profile/ProfileHeader"
 import { Panel }         from "../components/Profile/Panel"
 import { ListItem }      from "../components/Profile/ListItem"
 import { useUserVenues } from "../hooks/useUsersVenues"
 import { useUserProfile } from "../hooks/useUserProfile"
+import { updateProfile } from "../api/holidaze/profiles"
 import type { Venue }    from "../api/holidaze/venues"
 import type { Booking } from "../api/holidaze/bookings"
 
 export default function ProfilePage() {
-  const navigate = useNavigate();
 
+  const navigate = useNavigate();
   
+  // Logged-in user
+
   const userJson = localStorage.getItem("user");
   const user = userJson ? JSON.parse(userJson) : null;
   const name = user?.name as string;
 
+  // Profile + venue data
   const { profile, loading: profileLoading, error: profileError } = useUserProfile(name);
   const { venues: myVenues, loading: venueLoading, error: venueError } = useUserVenues(name);
-
   const bookings: Booking[] = profile?.bookings || [];
+
+  // Edit modal state
+  const [showEdit, setShowEdit] = useState(false);
+  const [bio, setBio] = useState(user?.bio || "");
+  const [avatarUrl, setAvatarUrl] = useState(user?.avatar?.url || "");
+
+  // Save profile updates
+  async function handleProfileUpdate(e: React.FormEvent) {
+    e.preventDefault();
+    try {
+      await updateProfile(name, { bio, avatar: { url: avatarUrl } });
+      alert(" Profile updated!");
+
+      const updatedUser = { ...user, bio, avatar: { url: avatarUrl } };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      window.location.reload();
+    } catch (err: any) {
+      alert(" Update failed: " + err.message);
+    }
+  }
 
   return (
     <div className="space-y-12">
@@ -29,6 +54,70 @@ export default function ProfilePage() {
         name={user?.name || ""}
         bio={user?.bio || ""}
       />
+
+      {/* Edit button */}
+      <div className="flex justify-end px-4 sm:px-6 lg:px-8">
+        <button
+          onClick={() => setShowEdit(true)}
+          className="px-4 py-2 bg-blue-400 text-black rounded hover:bg-accent-dark"
+        >
+          Edit Profile
+        </button>
+      </div>
+
+      {/* Modal form */}
+      {showEdit && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-6 relative">
+            <button
+              className="absolute top-3 right-3 text-gray-500 hover:text-red-500"
+              onClick={() => setShowEdit(false)}
+              aria-label="Close"
+            >
+              ×
+            </button>
+
+            <h2 className="text-xl font-semibold mb-4">Edit Profile</h2>
+            <form onSubmit={handleProfileUpdate} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Bio</label>
+                <textarea
+                  className="w-full border p-2 rounded"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  rows={3}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Avatar URL</label>
+                <input
+                  type="url"
+                  className="w-full border p-2 rounded"
+                  value={avatarUrl}
+                  onChange={(e) => setAvatarUrl(e.target.value)}
+                />
+              </div>
+
+              <div className="flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowEdit(false)}
+                  className="px-4 py-2 border rounded"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-col lg:flex-row gap-8 px-4 sm:px-6 lg:px-8">
         {/* Bookings */}
