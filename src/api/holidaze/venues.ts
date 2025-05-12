@@ -114,7 +114,6 @@ export async function getVenuesByProfile(
   return json as VenuesResponse
 }
 
-// 10) Update a venue
 export async function updateVenue(id: string, payload: NewVenueData): Promise<CreateVenueResponse> {
   const res = await fetch(`${BASE}/venues/${id}`, {
     method: "PUT",
