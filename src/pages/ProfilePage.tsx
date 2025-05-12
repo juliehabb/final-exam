@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa"
 import { ProfileHeader } from "../components/Profile/ProfileHeader"
 import { Panel }         from "../components/Profile/Panel"
@@ -10,6 +10,9 @@ import type { Venue }    from "../api/holidaze/venues"
 import type { Booking } from "../api/holidaze/bookings"
 
 export default function ProfilePage() {
+  const navigate = useNavigate();
+
+  
   const userJson = localStorage.getItem("user");
   const user = userJson ? JSON.parse(userJson) : null;
   const name = user?.name as string;
@@ -79,7 +82,7 @@ export default function ProfilePage() {
                 subtitle=""
                 actions={
                   <>
-                    <button onClick={() => alert(`Edit ${v.id}`)} aria-label="Edit">
+                    <button onClick={() => navigate(`/venues/${v.id}/edit`)} aria-label="Edit">
                       <FaEdit className="text-gray-600 hover:text-accent" />
                     </button>
                     <button
