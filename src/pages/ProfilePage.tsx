@@ -1,16 +1,17 @@
-
 import React, { useState} from "react"
 import { Link, useNavigate } from "react-router-dom"
-
 import { FaPlus, FaEdit, FaTrash } from "react-icons/fa"
 import { ProfileHeader } from "../components/Profile/ProfileHeader"
 import { Panel }         from "../components/Profile/Panel"
 import { ListItem }      from "../components/Profile/ListItem"
 import { useUserVenues } from "../hooks/useUsersVenues"
 import { useUserProfile } from "../hooks/useUserProfile"
+import { VenueBookingModal } from "../components/Profile/venueBookingModal"
+import { getBookingsByVenue } from "../api/holidaze/bookings"
 import { updateProfile } from "../api/holidaze/profiles"
 import type { Venue }    from "../api/holidaze/venues"
 import type { Booking } from "../api/holidaze/bookings"
+
 
 export default function ProfilePage() {
 
@@ -26,6 +27,24 @@ export default function ProfilePage() {
   const { profile, loading: profileLoading, error: profileError } = useUserProfile(name);
   const { venues: myVenues, loading: venueLoading, error: venueError } = useUserVenues(name);
   const bookings: Booking[] = profile?.bookings || [];
+
+
+  //  Modal state
+  const [modalVenueId, setModalVenueId] = useState<string | null>(null);
+  const [modalVenueName, setModalVenueName] = useState<string>("");
+  const [modalBookings, setModalBookings] = useState<Booking[]>([]);
+
+  async function openBookingModal(venue: Venue) {
+    try {
+      const bookings = await getBookingsByVenue(venue.id);
+      setModalVenueName(venue.name);
+      setModalBookings(bookings);
+      setModalVenueId(venue.id);
+    } catch (err: any) {
+      console.error("Failed to fetch bookings for venue:", err.message);
+    }
+  }
+  
 
   // Edit modal state
   const [showEdit, setShowEdit] = useState(false);
@@ -44,6 +63,7 @@ export default function ProfilePage() {
       window.location.reload();
     } catch (err: any) {
       alert(" Update failed: " + err.message);
+
     }
   }
 
@@ -167,11 +187,15 @@ export default function ProfilePage() {
               <ListItem
                 key={v.id}
                 image={v.media[0]?.url || ""}
-                title={v.name}
+                title={`${v.name}`}
                 subtitle=""
                 actions={
                   <>
-                    <button onClick={() => navigate(`/venues/${v.id}/edit`)} aria-label="Edit">
+                    <button onClick={() => openBookingModal(v)} className="text-sm text-indigo-600 hover:underline">
+                      View Bookings
+                    </button>
+                    <button onClick={() => alert(`Edit ${v.id}`)} aria-label="Edit">
+
                       <FaEdit className="text-gray-600 hover:text-accent" />
                     </button>
                     <button
@@ -188,6 +212,15 @@ export default function ProfilePage() {
             ))}
         </Panel>
       </div>
+
+      {/*  Modal */}
+      {modalVenueId && (
+        <VenueBookingModal
+          venueName={modalVenueName}
+          bookings={modalBookings}
+          onClose={() => setModalVenueId(null)}
+        />
+      )}
     </div>
   );
 }
