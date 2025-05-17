@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState} from "react";
 import { useVenues } from "../hooks/useVenues";
 import VenueCard from "../components/VenueCard";
 import NavBar from "../components/nav";
@@ -7,6 +7,7 @@ import SideBar from "../components/Home/SideBar";
 
 export default function HomePage() {
   const { venues, loading, error } = useVenues();
+  const [searchTerm, setSearchTerm] = useState("");
 
   
   function amenitiesFrom(meta: Record<string, boolean>) {
@@ -21,11 +22,15 @@ export default function HomePage() {
     );
   }
 
+  const filteredVenues = venues.filter((v) =>
+    v.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <NavBar />
       <main className="p-4">
-        <SearchBar />
+        <SearchBar value={searchTerm} onChange={setSearchTerm} />
 
         <section className="flex gap-4">
           <SideBar />
@@ -36,7 +41,7 @@ export default function HomePage() {
 
             {!loading && !error && (
               <div className="flex flex-wrap gap-8 justify-center py-8">
-                {venues.map((v) => (
+                {filteredVenues.map((v) => (
                   <VenueCard
                     key={v.id}
                     id={v.id}
