@@ -9,6 +9,7 @@ import ProfilePage from './pages/ProfilePage';
 import RegisterPage from './pages/register';
 import LoginPage from './pages/login';
 import NewVenuePage from './pages/newVenuePage';
+import EditVenuePage from './pages/editVenuePage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path='/venue/:id' element={<VenuePage />} />
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/venues/new' element={<NewVenuePage />} />
+        <Route path='/venues/:id/edit' element={<EditVenuePage />} />
         
       </Routes>
     </>
