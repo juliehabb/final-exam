@@ -194,10 +194,10 @@ export default function ProfilePage() {
                     <button onClick={() => openBookingModal(v)} className="text-sm text-indigo-600 hover:underline">
                       View Bookings
                     </button>
-                    <button onClick={() => alert(`Edit ${v.id}`)} aria-label="Edit">
+                    <Link to={`/venues/${v.id}/edit`} aria-label="Edit">
+                    <FaEdit className="text-gray-600 hover:text-accent" />
+                    </Link>
 
-                      <FaEdit className="text-gray-600 hover:text-accent" />
-                    </button>
                     <button
                       onClick={() =>
                         window.confirm("Delete this venue?") && alert(`Deleted ${v.id}`)
