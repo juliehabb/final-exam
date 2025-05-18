@@ -127,3 +127,18 @@ export async function updateVenue(id: string, payload: NewVenueData): Promise<Cr
   }
   return json as CreateVenueResponse;
 }
+
+export async function deleteVenue(id:string): Promise<void> {
+  const res = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "X-Noroff-API-Key": localStorage.getItem("apiKey") || ""
+    },
+  });
+
+  if(!res.ok) {
+    const json = await res.json();
+    throw new Error(json?.message || `Failed to delete venue ${id}` );
+  }
+}
