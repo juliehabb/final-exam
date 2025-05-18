@@ -10,7 +10,9 @@ import { VenueBookingModal } from "../components/Profile/venueBookingModal"
 import { getBookingsByVenue } from "../api/holidaze/bookings"
 import { updateProfile } from "../api/holidaze/profiles"
 import type { Venue }    from "../api/holidaze/venues"
+import { deleteVenue } from "../api/holidaze/venues"
 import type { Booking } from "../api/holidaze/bookings"
+
 
 
 export default function ProfilePage() {
@@ -50,6 +52,9 @@ export default function ProfilePage() {
   const [showEdit, setShowEdit] = useState(false);
   const [bio, setBio] = useState(user?.bio || "");
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar?.url || "");
+
+  // Delete venue
+  const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
   // Save profile updates
   async function handleProfileUpdate(e: React.FormEvent) {
@@ -200,7 +205,7 @@ export default function ProfilePage() {
 
                     <button
                       onClick={() =>
-                        window.confirm("Delete this venue?") && alert(`Deleted ${v.id}`)
+                        setConfirmDeleteId(v.id)
                       }
                       aria-label="Delete"
                     >
@@ -213,7 +218,7 @@ export default function ProfilePage() {
         </Panel>
       </div>
 
-      {/*  Modal */}
+      {/*  Modal - venue bookings */}
       {modalVenueId && (
         <VenueBookingModal
           venueName={modalVenueName}
@@ -221,6 +226,40 @@ export default function ProfilePage() {
           onClose={() => setModalVenueId(null)}
         />
       )}
+
+      {/*  Modal - Delete confirmation */}
+      {confirmDeleteId && (
+     <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
+     <div className="bg-white p-6 rounded-xl max-w-sm w-full relative shadow-lg">
+      <h2 className="text-lg font-semibold mb-4">Delete Venue</h2>
+      <p className="mb-6 text-gray-700">
+        Are you sure you want to delete this venue? This action cannot be undone.
+      </p>
+      <div className="flex justify-end gap-4">
+        <button
+          onClick={() => setConfirmDeleteId(null)}
+          className="px-4 py-2 border rounded"
+        >
+          Cancel
+        </button>
+        <button
+          onClick={async () => {
+            try {
+              await deleteVenue(confirmDeleteId);
+              setConfirmDeleteId(null);
+              window.location.reload(); 
+            } catch (err: any) {
+              alert("Failed to delete venue: " + err.message);
+            }
+          }}
+          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </div>
   );
 }
