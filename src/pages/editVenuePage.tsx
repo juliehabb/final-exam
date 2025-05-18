@@ -53,54 +53,81 @@ export default function EditVenuePage() {
   if (!venue) return null;
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white rounded-xl shadow-lg space-y-4">
+    <div className="max-w-lg mx-auto p-6 bg-white rounded-xl shadow-lg space-y-4 relative">
+      <button
+        onClick={() => navigate(-1)}
+        className="absolute top-4 right-4 text-2xl text-gray-500 hover:text-red-500"
+        aria-label="Close edit venue form"
+      >
+        ×
+      </button>
+
       <h1 className="text-2xl font-bold">Edit Venue</h1>
+
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input 
-        className="w-full px-4 py-2 border rounded"
-        value={venue.name}
-        onChange={(e) => setVenue({ ...venue, name: e.target.value})}
-        placeholder="Venue name"
-        required
-         />
-        
-        <textarea
-          className="w-full px-4 py-2 border rounded h-24"
-          value={venue.description}
-          onChange={(e) => setVenue({ ...venue, description: e.target.value })}
-          placeholder="Description"
-          required
-        />
-        <input
-          className="w-full px-4 py-2 border rounded"
-          value={venue.media[0]?.url || ""}
-          onChange={(e) =>
-            setVenue({
-              ...venue,
-              media: [{ url: e.target.value, alt: venue.media[0]?.alt || "" }],
-            })
-          }
-          placeholder="Image URL"
-        />
-        <div className="flex gap-2">
+        <div>
+          <label className="block font-medium text-sm mb-1">Name</label>
           <input
-            className="flex-1 px-4 py-2 border rounded"
-            type="number"
-            value={venue.price}
-            onChange={(e) => setVenue({ ...venue, price: +e.target.value })}
-            placeholder="Price"
-          />
-          <input
-            className="flex-1 px-4 py-2 border rounded"
-            type="number"
-            value={venue.maxGuests}
-            onChange={(e) => setVenue({ ...venue, maxGuests: +e.target.value })}
-            placeholder="Guests"
+            className="w-full px-4 py-2 border rounded"
+            value={venue.name}
+            onChange={(e) => setVenue({ ...venue, name: e.target.value })}
+            placeholder="Venue name"
+            required
           />
         </div>
+
+        <div>
+          <label className="block font-medium text-sm mb-1">Description</label>
+          <textarea
+            className="w-full px-4 py-2 border rounded h-24"
+            value={venue.description}
+            onChange={(e) => setVenue({ ...venue, description: e.target.value })}
+            placeholder="Description"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block font-medium text-sm mb-1">Image URL</label>
+          <input
+            className="w-full px-4 py-2 border rounded"
+            value={venue.media[0]?.url || ""}
+            onChange={(e) =>
+              setVenue({
+                ...venue,
+                media: [{ url: e.target.value, alt: venue.media[0]?.alt || "" }],
+              })
+            }
+            placeholder="Image URL"
+          />
+        </div>
+
+        <div className="flex gap-2">
+          <div className="flex-1">
+            <label className="block font-medium text-sm mb-1">Price</label>
+            <input
+              className="w-full px-4 py-2 border rounded"
+              type="number"
+              value={venue.price}
+              onChange={(e) => setVenue({ ...venue, price: +e.target.value })}
+              placeholder="Price"
+            />
+          </div>
+          <div className="flex-1">
+            <label className="block font-medium text-sm mb-1">Guests</label>
+            <input
+              className="w-full px-4 py-2 border rounded"
+              type="number"
+              value={venue.maxGuests}
+              onChange={(e) => setVenue({ ...venue, maxGuests: +e.target.value })}
+              placeholder="Guests"
+            />
+          </div>
+        </div>
+
         <fieldset className="flex gap-4">
           {["wifi", "parking", "breakfast", "pets"].map((key) => (
-            <label key={key}>
+            <label key={key} className="text-sm">
               <input
                 type="checkbox"
                 checked={venue.meta[key as keyof typeof venue.meta]}
@@ -118,40 +145,56 @@ export default function EditVenuePage() {
             </label>
           ))}
         </fieldset>
-        <input
-          className="w-full px-4 py-2 border rounded"
-          value={venue.location.address}
-          onChange={(e) =>
-            setVenue({ ...venue, location: { ...venue.location, address: e.target.value } })
-          }
-          placeholder="Address"
-        />
-        <div className="flex gap-2">
+
+        <div>
+          <label className="block font-medium text-sm mb-1">Address</label>
           <input
-            className="flex-1 px-4 py-2 border rounded"
-            value={venue.location.city}
+            className="w-full px-4 py-2 border rounded"
+            value={venue.location.address}
             onChange={(e) =>
-              setVenue({ ...venue, location: { ...venue.location, city: e.target.value } })
+              setVenue({ ...venue, location: { ...venue.location, address: e.target.value } })
             }
-            placeholder="City"
-          />
-          <input
-            className="flex-1 px-4 py-2 border rounded"
-            value={venue.location.zip}
-            onChange={(e) =>
-              setVenue({ ...venue, location: { ...venue.location, zip: e.target.value } })
-            }
-            placeholder="ZIP"
+            placeholder="Address"
           />
         </div>
-        <input
-          className="w-full px-4 py-2 border rounded"
-          value={venue.location.country}
-          onChange={(e) =>
-            setVenue({ ...venue, location: { ...venue.location, country: e.target.value } })
-          }
-          placeholder="Country"
-        />
+
+        <div className="flex gap-2">
+          <div className="flex-1">
+            <label className="block font-medium text-sm mb-1">City</label>
+            <input
+              className="w-full px-4 py-2 border rounded"
+              value={venue.location.city}
+              onChange={(e) =>
+                setVenue({ ...venue, location: { ...venue.location, city: e.target.value } })
+              }
+              placeholder="City"
+            />
+          </div>
+          <div className="flex-1">
+            <label className="block font-medium text-sm mb-1">ZIP</label>
+            <input
+              className="w-full px-4 py-2 border rounded"
+              value={venue.location.zip}
+              onChange={(e) =>
+                setVenue({ ...venue, location: { ...venue.location, zip: e.target.value } })
+              }
+              placeholder="ZIP"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block font-medium text-sm mb-1">Country</label>
+          <input
+            className="w-full px-4 py-2 border rounded"
+            value={venue.location.country}
+            onChange={(e) =>
+              setVenue({ ...venue, location: { ...venue.location, country: e.target.value } })
+            }
+            placeholder="Country"
+          />
+        </div>
+
         <button
           type="submit"
           className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold"

@@ -4,6 +4,7 @@ import React, { FormEvent, useState } from "react";
 import { useNavigate }      from "react-router-dom";
 import { useCreateVenue } from "../hooks/useCreateVenues";
 import type { NewVenueData } from "../api/holidaze/venues";
+import { FaTimes } from "react-icons/fa";
 
 export default function NewVenuePage() {
     const navigate = useNavigate();
@@ -51,116 +52,143 @@ export default function NewVenuePage() {
 
 
  return (
-    <div className="max-w-lg mx-auto p-6 bg-white rounded-2xl shadow-lg space-y-4">
+    <div className="relative max-w-lg mx-auto mt-16 p-6 bg-white rounded-2xl shadow-lg space-y-4">
+        <button
+         onClick={() => navigate(-1)} // or a specific route like navigate("/profile")
+         className=" absolute top-4 right-4 text-2xl text-gray-500 hover:text-blue-500"
+        aria-label="Close create venue form"
+         >
+         ×
+       </button>
+
       <h1 className="text-2xl font-bold">Create New Venue</h1>
       {error && <p className="text-red-500">{error}</p>}
+
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          className="w-full px-4 py-2 border rounded"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Venue name"
-          required
-        />
-        <textarea
-          className="w-full px-4 py-2 border rounded h-24"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          placeholder="Description"
-          required
-        />
-        <input
-          className="w-full px-4 py-2 border rounded"
-          value={mediaUrl}
-          onChange={(e) => setMediaUrl(e.target.value)}
-          placeholder="Image URL"
-        />
-        <div className="flex gap-2">
+        <div>
+          <label className="block font-medium mb-1">Name</label>
           <input
-            className="flex-1 px-4 py-2 border rounded"
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(+e.target.value)}
-            placeholder="Price"
-            required
-          />
-          <input
-            className="flex-1 px-4 py-2 border rounded"
-            type="number"
-            value={maxGuests}
-            onChange={(e) => setMaxGuests(+e.target.value)}
-            placeholder="Max guests"
+            className="w-full px-4 py-2 border rounded"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Venue name"
             required
           />
         </div>
-        <fieldset className="flex gap-4">
-          <label>
+
+        <div>
+          <label className="block font-medium mb-1">Description</label>
+          <textarea
+            className="w-full px-4 py-2 border rounded h-24"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Description"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block font-medium mb-1">Image URL</label>
+          <input
+            className="w-full px-4 py-2 border rounded"
+            value={mediaUrl}
+            onChange={(e) => setMediaUrl(e.target.value)}
+            placeholder="Image URL"
+          />
+        </div>
+
+        <div className="flex gap-2">
+          <div className="flex-1">
+            <label className="block font-medium mb-1">Price</label>
             <input
-              type="checkbox"
-              checked={wifi}
-              onChange={() => setWifi((v) => !v)}
-            />{" "}
-            Wifi
-          </label>
-          <label>
+              className="w-full px-4 py-2 border rounded"
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(+e.target.value)}
+              placeholder="Price"
+              required
+            />
+          </div>
+          <div className="flex-1">
+            <label className="block font-medium mb-1">Max Guests</label>
             <input
-              type="checkbox"
-              checked={parking}
-              onChange={() => setParking((v) => !v)}
-            />{" "}
-            Parking
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={breakfast}
-              onChange={() => setBreakfast((v) => !v)}
-            />{" "}
-            Breakfast
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              checked={pets}
-              onChange={() => setPets((v) => !v)}
-            />{" "}
-            Pets
-          </label>
+              className="w-full px-4 py-2 border rounded"
+              type="number"
+              value={maxGuests}
+              onChange={(e) => setMaxGuests(+e.target.value)}
+              placeholder="Max guests"
+              required
+            />
+          </div>
+        </div>
+
+        <fieldset className="space-y-2">
+          <legend className="font-medium">Amenities</legend>
+          <div className="flex gap-4 flex-wrap">
+            <label>
+              <input type="checkbox" checked={wifi} onChange={() => setWifi(!wifi)} /> Wifi
+            </label>
+            <label>
+              <input type="checkbox" checked={parking} onChange={() => setParking(!parking)} /> Parking
+            </label>
+            <label>
+              <input type="checkbox" checked={breakfast} onChange={() => setBreakfast(!breakfast)} /> Breakfast
+            </label>
+            <label>
+              <input type="checkbox" checked={pets} onChange={() => setPets(!pets)} /> Pets
+            </label>
+          </div>
         </fieldset>
-        <input
-          className="w-full px-4 py-2 border rounded"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          placeholder="Address"
-          required
-        />
-        <div className="flex gap-2">
+
+        <div>
+          <label className="block font-medium mb-1">Address</label>
           <input
-            className="flex-1 px-4 py-2 border rounded"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            placeholder="City"
-            required
-          />
-          <input
-            className="flex-1 px-4 py-2 border rounded"
-            value={zip}
-            onChange={(e) => setZip(e.target.value)}
-            placeholder="ZIP"
+            className="w-full px-4 py-2 border rounded"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="Address"
             required
           />
         </div>
-        <input
-          className="w-full px-4 py-2 border rounded"
-          value={country}
-          onChange={(e) => setCountry(e.target.value)}
-          placeholder="Country"
-          required
-        />
+
+        <div className="flex gap-2">
+          <div className="flex-1">
+            <label className="block font-medium mb-1">City</label>
+            <input
+              className="w-full px-4 py-2 border rounded"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              placeholder="City"
+              required
+            />
+          </div>
+          <div className="flex-1">
+            <label className="block font-medium mb-1">ZIP Code</label>
+            <input
+              className="w-full px-4 py-2 border rounded"
+              value={zip}
+              onChange={(e) => setZip(e.target.value)}
+              placeholder="ZIP"
+              required
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block font-medium mb-1">Country</label>
+          <input
+            className="w-full px-4 py-2 border rounded"
+            value={country}
+            onChange={(e) => setCountry(e.target.value)}
+            placeholder="Country"
+            required
+          />
+        </div>
+
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-accent text-white py-3 rounded-lg font-semibold"
+          className="w-full bg-blue-400 text-black py-3 rounded-lg font-semibold"
         >
           {loading ? "Creating…" : "Create Venue"}
         </button>
