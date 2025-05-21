@@ -51,6 +51,8 @@ export default function ProfilePage() {
   // Edit modal state
   const [showEdit, setShowEdit] = useState(false);
   const [bio, setBio] = useState(user?.bio || "");
+
+  //update avatar
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar?.url || "");
 
   // Delete venue
