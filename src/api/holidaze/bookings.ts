@@ -89,3 +89,24 @@ export async function getBookingsByVenue(venueId: string): Promise<Booking[]> {
   const allBookings: Booking[] = json.data;
   return allBookings.filter((b) => b.venue.id === venueId);
 }
+
+export async function deleteBooking (id: string): Promise<void> {
+  const token = localStorage.getItem("token");
+  const apiKey = localStorage.getItem("apiKey");
+
+  if (!token || !apiKey ) throw new Error("Missing auth credentials");
+
+  const res = await fetch(`https://v2.api.noroff.dev/holidaze/bookings/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "X-Noroff-API-Key": apiKey,
+
+    },
+  });
+
+  if (!res.ok) {
+    const json = await res.json();
+    throw new Error(json.message || `Failed to delete booking (${res.status})` )
+  }
+}
