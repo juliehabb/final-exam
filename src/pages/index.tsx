@@ -6,55 +6,72 @@ import SearchBar from "../components/Home/SearchBar";
 import SideBar from "../components/Home/SideBar";
 
 
-const allowedUsers = ["Bulie.Habb", "BulieRegularU", "BulieVM", "NewTestUserJ"];
+const allowedUsers = [
+  "BulieVM2",
+  "BulieRegularU",
+  "BulieVM",
+  "NewTestUserJ"
+];
 
 export default function HomePage() {
-
   const [venues, setVenues] = useState<Venue[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-
 useEffect(() => {
-  async function fetchAllAllowedUserVenues() {
+  async function fetchVenues() {
+    const token = localStorage.getItem("token");
+    const apiKey = localStorage.getItem("apiKey");
+
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+    };
+    if (token) headers.Authorization = `Bearer ${token}`;
+    if (apiKey) headers["X-Noroff-API-Key"] = apiKey;
+
     try {
-      const token = localStorage.getItem("token");
-      const apiKey = localStorage.getItem("apiKey");
-
-      const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-      };
-      if (token) headers.Authorization = `Bearer ${token}`;
-      if (apiKey) headers["X-Noroff-API-Key"] = apiKey;
-
       const allVenues: Venue[] = [];
 
-      for (const username of allowedUsers) {
-        const res = await fetch(
-          `https://v2.api.noroff.dev/holidaze/profiles/${username}/venues`,
-          { headers }
-        );
+      if (token && apiKey) {
+        // Logged in – filter by allowed users
+        for (const username of allowedUsers) {
+          const res = await fetch(
+            `https://v2.api.noroff.dev/holidaze/profiles/${username}/venues`,
+            { headers }
+          );
+          const json = await res.json();
 
+          if (res.ok && Array.isArray(json.data)) {
+            allVenues.push(...json.data);
+          } else {
+            console.warn(` Skipping ${username}`, json.message);
+          }
+        }
+      } else {
+        // Not logged in – show all public venues (no filtering)
+        const res = await fetch("https://v2.api.noroff.dev/holidaze/venues");
         const json = await res.json();
-        
+
         if (res.ok && Array.isArray(json.data)) {
           allVenues.push(...json.data);
         } else {
-          console.warn(`Skipping ${username}`, json.message);
+          console.warn(" Public fetch failed", json.message);
         }
       }
 
       setVenues(allVenues);
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unexpected error");
     } finally {
       setLoading(false);
     }
   }
 
-  fetchAllAllowedUserVenues();
+  fetchVenues();
 }, []);
+
+
 
   function amenitiesFrom(meta: Record<string, boolean>) {
     return Object.entries(meta)
@@ -72,8 +89,8 @@ useEffect(() => {
       );
   }
 
-  const searchFiltered = venues.filter((v) => 
-  v.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const searchFiltered = venues.filter((v) =>
+    v.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -91,18 +108,22 @@ useEffect(() => {
 
             {!loading && !error && (
               <div className="flex flex-wrap gap-8 justify-center py-8">
-                {searchFiltered.map((v) => (
-                  <VenueCard
-                    key={v.id}
-                    id={v.id}
-                    image={v.media[0]?.url || ""}
-                    title={v.name}
-                    location={`${v.location.city}, ${v.location.country}`}
-                    rating={v.rating}
-                    price={v.price}
-                    amenities={amenitiesFrom(v.meta)}
-                  />
-                ))}
+                {searchFiltered.length > 0 ? (
+                  searchFiltered.map((v) => (
+                    <VenueCard
+                      key={v.id}
+                      id={v.id}
+                      image={v.media[0]?.url || ""}
+                      title={v.name}
+                      location={`${v.location.city}, ${v.location.country}`}
+                      rating={v.rating}
+                      price={v.price}
+                      amenities={amenitiesFrom(v.meta)}
+                    />
+                  ))
+                ) : (
+                  <p>No venues found.</p>
+                )}
               </div>
             )}
           </div>
@@ -111,4 +132,3 @@ useEffect(() => {
     </>
   );
 }
-
