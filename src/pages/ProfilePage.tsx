@@ -158,16 +158,24 @@ export default function ProfilePage() {
         <Panel
           title="Your venues"
           actions={
-            <Link to="/venues/new" className="flex items-center gap-2 px-4 py-2 bg-accent text-white rounded-lg">
-              <FaPlus /> New Venue
-            </Link>
+            user?.venueManager ? (
+              <Link to="/venues/new" className="flex items-center gap-2 px-4 py-2 bg-blue-400 text-black rounded-lg">
+                <FaPlus /> New Venue
+              </Link>
+            ) : null
           }
         >
           {venueLoading && <p>Loading venues…</p>}
           {venueError && <p className="text-red-500">Error: {venueError}</p>}
 
           {!venueLoading && !venueError && myVenues.length === 0 && (
-            <p className="text-gray-500">You haven’t created any venues yet.</p>
+            user?.venueManager ? (
+              <p className="text-gray-500">You haven’t created any venues yet.</p>
+            ) : (
+              <p className="text-sm text-gray-500 italic">
+                Only venue managers can create venues. <a href="#" className="underline">Become a manager</a>
+              </p>
+            )
           )}
 
           {!venueLoading &&
@@ -186,10 +194,7 @@ export default function ProfilePage() {
                     <Link to={`/venues/${v.id}/edit`} aria-label="Edit">
                       <FaEdit className="text-gray-600 hover:text-accent" />
                     </Link>
-                    <button
-                      onClick={() => setConfirmDeleteId(v.id)}
-                      aria-label="Delete"
-                    >
+                    <button onClick={() => setConfirmDeleteId(v.id)} aria-label="Delete">
                       <FaTrash className="text-gray-600 hover:text-red-500" />
                     </button>
                   </>
