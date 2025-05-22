@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 export default function RegisterPage() {
     const navigate = useNavigate();
     const { register, loading, error} = useRegister();
-
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -27,8 +26,6 @@ export default function RegisterPage() {
         
     } catch (err) {
         console.error("Registration error:", err)
-
-
     }
   }
 
