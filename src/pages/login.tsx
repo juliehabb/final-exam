@@ -14,24 +14,41 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       const { loginResult, apiKey } = await login({ email, password });
+      const token = loginResult.data.accessToken;
+      const username = loginResult.data.name;
 
-      // Console.log for debugging
-      console.log("Logged in, token:", loginResult.data.accessToken);
-      console.log("API key:", apiKey);
+      const profileRes = await fetch(
+        `https://v2.api.noroff.dev/holidaze/profiles/${username}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-Noroff-API-Key": apiKey,
+          },
+        }
+      );
 
-      // Persist for future requests
-      localStorage.setItem("token", loginResult.data.accessToken);
-      localStorage.setItem("apiKey", apiKey);
-      localStorage.setItem("user", JSON.stringify(loginResult.data));
+      const profileJson = await profileRes.json();
 
-      // Redirect to your app’s main page
+      if (!profileRes.ok) {
+        throw new Error(profileJson.message || "Failed to fetch full profile");
+      }
+
+      const fullUser = profileJson.data;
+      console.log("Full user profile:", fullUser);
+
+
+      // Store token and API key
+      localStorage.setItem("token", token);
+       localStorage.setItem("apiKey", apiKey);
+       localStorage.setItem("user", JSON.stringify(fullUser));
+  
       navigate("/");
-    } catch {
-      // error message is surfaced via `error` from the hook
+    } catch (err: any) {
+      console.error("Login failed", err.message);
     }
   }
 
-  return (
+   return (
     <AuthForm
       title="Log In"
       submitLabel={loading ? "Signing In…" : "Sign In"}
