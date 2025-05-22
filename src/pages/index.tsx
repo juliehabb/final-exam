@@ -1,41 +1,59 @@
 import React, { useState, useEffect} from "react";
-import { getVenuesByProfile } from "../api/holidaze/venues";
 import type { Venue } from "../api/holidaze/venues";
 import VenueCard from "../components/VenueCard";
 import NavBar from "../components/nav";
 import SearchBar from "../components/Home/SearchBar";
 import SideBar from "../components/Home/SideBar";
 
+
+const allowedUsers = ["Bulie.Habb", "BulieRegularU", "BulieVM", "NewTestUserJ"];
+
 export default function HomePage() {
+
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const token = localStorage.getItem("token");
+  const apiKey = localStorage.getItem("apiKey");
+
   const [venues, setVenues] = useState<Venue[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const userJson = localStorage.getItem("user");
-  const user = userJson ? JSON.parse(userJson) : null;
-  const profileName = user?.name;
 
-  useEffect(() => {
-    async function fetchUserVenues() {
-      if (!profileName) {
-        setError("User not logged in.");
-        setLoading(false);
-        return;
+useEffect(() => {
+  async function fetchAllAllowedUserVenues() {
+    try {
+      const headers: Record<string, string> = {
+        "Content-Type": "application/json",
+      };
+      if (token) headers.Authorization = `Bearer ${token}`;
+      if (apiKey) headers["X-Noroff-API-Key"] = apiKey;
+
+      const allVenues: Venue[] = [];
+
+      for (const username of allowedUsers) {
+        const res = await fetch(
+          `https://v2.api.noroff.dev/holidaze/profiles/${username}/venues`,
+          { headers }
+        );
+        const json = await res.json();
+        if (res.ok && Array.isArray(json.data)) {
+          allVenues.push(...json.data);
+        } else {
+          console.warn(`Skipping ${username}`, json.message);
+        }
       }
 
-      try {
-        const res = await getVenuesByProfile(profileName);
-        setVenues(res.data);
-      } catch (err: any) {
-        setError(err.message || "Could not fetch user venues");
-      } finally {
-        setLoading(false);
-      }
+      setVenues(allVenues);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
     }
+  }
 
-    fetchUserVenues();
-  }, [profileName]);
+  fetchAllAllowedUserVenues();
+}, []);
 
   function amenitiesFrom(meta: Record<string, boolean>) {
     return Object.entries(meta)
@@ -53,8 +71,8 @@ export default function HomePage() {
       );
   }
 
-  const filteredVenues = venues.filter((v) =>
-    v.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const searchFiltered = venues.filter((v) => 
+  v.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -72,7 +90,7 @@ export default function HomePage() {
 
             {!loading && !error && (
               <div className="flex flex-wrap gap-8 justify-center py-8">
-                {filteredVenues.map((v) => (
+                {searchFiltered.map((v) => (
                   <VenueCard
                     key={v.id}
                     id={v.id}
