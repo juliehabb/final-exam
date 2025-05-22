@@ -86,7 +86,7 @@ export async function getVenueById(id: string): Promise<{ data: Venue }> {
 export async function createVenueApi(
   payload: NewVenueData
 ): Promise<CreateVenueResponse> {
-  const res  = await fetch(`${BASE}/venues`, {
+  const res  = await fetch(`${BASE}/venues?_owner=true`, {
     method:  "POST",
     headers: authHeaders(),
     body:    JSON.stringify(payload),
