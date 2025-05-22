@@ -10,10 +10,6 @@ const allowedUsers = ["Bulie.Habb", "BulieRegularU", "BulieVM", "NewTestUserJ"];
 
 export default function HomePage() {
 
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const token = localStorage.getItem("token");
-  const apiKey = localStorage.getItem("apiKey");
-
   const [venues, setVenues] = useState<Venue[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,6 +19,9 @@ export default function HomePage() {
 useEffect(() => {
   async function fetchAllAllowedUserVenues() {
     try {
+      const token = localStorage.getItem("token");
+      const apiKey = localStorage.getItem("apiKey");
+
       const headers: Record<string, string> = {
         "Content-Type": "application/json",
       };
@@ -36,7 +35,9 @@ useEffect(() => {
           `https://v2.api.noroff.dev/holidaze/profiles/${username}/venues`,
           { headers }
         );
+
         const json = await res.json();
+        
         if (res.ok && Array.isArray(json.data)) {
           allVenues.push(...json.data);
         } else {
