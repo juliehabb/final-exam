@@ -34,9 +34,6 @@ export async function createBooking(
   const apiKey = localStorage.getItem("apiKey");
   const authToken = token || localStorage.getItem("token");
 
-  console.log("Using token for booking:", authToken);
-  console.log("Using API key for booking:", apiKey);
-
   if (!authToken || !apiKey) {
     throw new Error("Missing token or API key");
   }
@@ -61,33 +58,40 @@ export async function createBooking(
   return json as BookingResponse;
 }
 
+
+
+
 /**
  * Fetch bookings for a specific venue (for venue managers to see when it's booked)
  */
-// Get all bookings, then filter by venueId
-export async function getBookingsByVenue(venueId: string): Promise<Booking[]> {
-  const apiKey = localStorage.getItem("apiKey");
+
+export async function getBookingsByVenue(id: string): Promise<Booking[]> {
+  
   const token = localStorage.getItem("token");
+  const apiKey = localStorage.getItem("apiKey");
 
   if (!token || !apiKey) {
-    throw new Error("Missing auth token or API key");
+    throw new Error("Missing authentication information");
   }
 
-  const res = await fetch("https://v2.api.noroff.dev/holidaze/bookings?_venue=true", {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-      "X-Noroff-API-Key": apiKey,
-    },
-  });
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    "X-Noroff-API-Key": apiKey,
+    "Content-Type": "application/json",
+  };
 
-  const json = await res.json();
-  if (!res.ok) {
-    throw new Error((json as any).message || "Failed to fetch bookings");
+  const response = await fetch(`https://v2.api.noroff.dev/holidaze/bookings/${id}`, {
+  headers,
+});
+
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Failed to fetch bookings");
   }
 
-  const allBookings: Booking[] = json.data;
-  return allBookings.filter((b) => b.venue.id === venueId);
+  return data.data as Booking[];
 }
 
 export async function deleteBooking (id: string): Promise<void> {
