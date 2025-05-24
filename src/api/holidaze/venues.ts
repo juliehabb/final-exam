@@ -1,3 +1,4 @@
+import type { Booking } from "./bookings"
 
 // 1) Shape of a single venue (only the fields rendered + owner.email)
 export type Venue = {
@@ -26,7 +27,9 @@ export type Venue = {
     bio?: string
     avatar?: { url: string; alt?: string }
     banner?: { url: string; alt?: string }
-  }
+  };
+
+  bookings?: Booking[];
 }
 
 // 2) Responses
@@ -76,10 +79,12 @@ export async function getAllVenues(): Promise<VenuesResponse> {
 
 // 7) Fetch a single venue
 export async function getVenueById(id: string): Promise<{ data: Venue }> {
-  const res  = await fetch(`${BASE}/venues/${id}`, { headers: authHeaders() })
-  const json = await res.json()
-  if (!res.ok) throw new Error((json as any).message || `Failed to fetch venue ${id}`)
-  return json as { data: Venue }
+  const res = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}?_bookings=true`, {
+    headers: authHeaders(),
+  });
+  const json = await res.json();
+  if (!res.ok) throw new Error(json.message || `Failed to fetch venue ${id}`);
+  return json as { data: Venue };
 }
 
 // 8) Create a new venue
