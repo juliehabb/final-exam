@@ -12,6 +12,8 @@ import { updateProfile } from "../api/holidaze/profiles"
 import type { Venue }    from "../api/holidaze/venues"
 import { deleteVenue } from "../api/holidaze/venues"
 import type { Booking } from "../api/holidaze/bookings"
+import { getBookingsForUserVenues } from "../api/holidaze/getBookingsForUserVenues"
+import { getVenueById } from "../api/holidaze/venues"
 
 
 
@@ -30,15 +32,23 @@ export default function ProfilePage() {
   const [modalBookings, setModalBookings] = useState<Booking[]>([]);
 
   async function openBookingModal(venue: Venue) {
-    try {
-      const bookings = await getBookingsByVenue(venue.id);
-      setModalVenueName(venue.name);
-      setModalBookings(bookings);
-      setModalVenueId(venue.id);
-    } catch (err: any) {
-      console.error("Failed to fetch bookings for venue:", err.message);
-    }
+  try {
+    console.log("Fetching bookings for venue:", venue.id);
+
+    const res = await getVenueById(venue.id);
+    const venueWithBookings = res.data;
+
+    const bookings = venueWithBookings.bookings || [];
+
+    console.log(" Bookings for this venue:", bookings);
+
+    setModalVenueName(venue.name);
+    setModalBookings(bookings);
+    setModalVenueId(venue.id);
+  } catch (err: any) {
+    console.error("Failed to fetch bookings for venue:", err.message);
   }
+}
 
   const [showEdit, setShowEdit] = useState(false);
   const [bio, setBio] = useState(user?.bio || "");
