@@ -20,7 +20,7 @@ type Booking = {
  * @param venue - Data for the selected venue.
  */
 export default function VenueDetails({ venue }: VenueDetailsProps) {
-  const { name, location, price, description, id } = venue;
+  const { name, location, price, description, id, meta } = venue;
 
   const [people, setPeople] = useState(2);
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -114,6 +114,18 @@ export default function VenueDetails({ venue }: VenueDetailsProps) {
     }
   };
 
+  const amenitiesList = [
+    { key: "wifi", label: "Free wifi" },
+    { key: "parking", label: "Parking" },
+    { key: "breakfast", label: "Breakfast included" },
+    { key: "kitchen", label: "Kitchen" },
+    { key: "pets", label: "Pets" },
+  ];
+
+  const offered = amenitiesList.filter((item) => meta[item.key as keyof typeof meta]);
+  const notOffered = amenitiesList.filter((item) => !meta[item.key as keyof typeof meta]);
+  
+
   return (
     <main className="p-6 space-y-6">
       <div className="flex flex-col lg:flex-row gap-6">
@@ -127,13 +139,33 @@ export default function VenueDetails({ venue }: VenueDetailsProps) {
             {location.address}, {location.city}
           </div>
           <p className="text-gray-700 my-4">{description}</p>
+
+          <div className="mt-4">
+            <h3 className="font-semibold">Offers</h3>
+            <div className="flex flex-wrap gap-3 text-sm text-gray-700 my-2">
+              {offered.length > 0 ? offered.map((item) => (
+                <span key={item.key} className="px-2 py-1 bg-gray-200 rounded">
+                  {item.label}
+                </span>
+              )) : <p>None</p>}
+            </div>
+
+            <h3 className="font-semibold mt-4">Does not offer</h3>
+            <div className="flex flex-wrap gap-3 text-sm text-gray-500 my-2">
+              {notOffered.length > 0 ? notOffered.map((item) => (
+                <span key={item.key} className="px-2 py-1 bg-gray-100 rounded">
+                  {item.label}
+                </span>
+              )) : <p>Everything included</p>}
+            </div>
+
+          </div>
         </div>
 
         {/* Booking Section */}
         <div className="bg-white p-6 rounded-2xl shadow-lg flex-1">
           <h2 className="text-xl font-semibold mb-4">Book your stay</h2>
 
-          {/* Calendar */}
           <div className="mb-4">
             <label className="block mb-1 text-sm font-medium text-gray-700">Check-in</label>
             <DatePicker
@@ -162,7 +194,6 @@ export default function VenueDetails({ venue }: VenueDetailsProps) {
             />
           </div>
 
-          {/* Guest Counter */}
           <div className="flex items-center justify-between mb-6">
             <span>Number of people</span>
             <div className="flex items-center gap-2">
@@ -189,11 +220,11 @@ export default function VenueDetails({ venue }: VenueDetailsProps) {
             Book
           </button>
 
-          {/* Feedback */}
           {bookingError && <p className="text-red-500 mt-2">{bookingError}</p>}
           {bookingSuccess && <p className="text-green-600 mt-2">Booking successful!</p>}
         </div>
       </div>
     </main>
   );
+
 }
