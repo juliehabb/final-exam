@@ -84,7 +84,7 @@ export default function ProfilePage() {
       <div className="flex justify-end px-4 sm:px-6 lg:px-8">
         <button
           onClick={() => setShowEdit(true)}
-          className="px-4 py-2 bg-blue-400 text-black rounded hover:bg-accent-dark"
+          className="px-4 py-2 bg-blue-200 text-black rounded hover:bg-accent-dark"
         >
           Edit Profile
         </button>
