@@ -6,7 +6,20 @@ export type ApiKeyResponse = {
   
   const BASE_URL = "https://v2.api.noroff.dev";
   
-  // 2) Generate an API key (requires your JWT in the Authorization header)
+  /**
+ * This function creates a new API key for your user.
+ * You need to already be logged in and have a JWT token.
+ *
+ * @param {string} jwt - Your login token (JWT) which proves you're allowed to do this.
+ * @returns {Promise<ApiKeyResponse>} - It gives back the API key if everything works.
+ * @throws {Error} - If something goes wrong (like you're not logged in), it will show an error.
+ *
+ * Example:
+ * ```ts
+ * const keyInfo = await createApiKey("your-jwt-token-here");
+ * console.log(keyInfo.data.key); // shows the new API key
+ * ```
+ */
   export async function createApiKey(jwt: string): Promise<ApiKeyResponse> {
     const res = await fetch(`${BASE_URL}/auth/create-api-key`, {
       method: "POST",
