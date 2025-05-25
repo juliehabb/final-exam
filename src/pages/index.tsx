@@ -109,7 +109,6 @@ useEffect(() => {
 
   return (
     <>
-      <NavBar />
       <main className="p-4">
   {/* Top search bar across full width */}
   <div className="max-w-full mb-6">
