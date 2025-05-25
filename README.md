@@ -1,46 +1,56 @@
-# Getting Started with Create React App
+# Holidaze - Frontend Exam Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A responsive accommodation booking platform built with React and TypeScript. Holidaze allows users to browse venues, make bookings, and for venue managers to manage listings and reservations.
 
-## Available Scripts
+## Description
 
-In the project directory, you can run:
+This is my final exam project for the Noroff Frontend Development course. Holidaze features a customer-facing interface where users can explore and book venues, and a manager-facing interface for handling venue creation, updates, and booking management.
 
-### `npm start`
+Live site: [https://juliehabb.github.io/final-exam](https://juliehabb.github.io/final-exam)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Getting Started
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Dependencies
 
-### `npm test`
+- Node.js (v18+ recommended)
+- NPM
+- React ^19
+- TypeScript
+- Tailwind CSS
+- React Router
+- gh-pages (for deployment)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Installing
 
-### `npm run build`
+1. Clone the repository:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone https://github.com/juliehabb/final-exam.git
+cd final-exam
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2.Install dependencies:
+npm install
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Executing program
 
-### `npm run eject`
+To run the app locally:
+npm start
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+To build and deploy to GitHub Pages:
+npm run deploy
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Make sure the homepage field in package.json is set correctly:
+"homepage": "https://juliehabb.github.io/final-exam"
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Authors
+Julie Habb
+GitHub @juliehabb
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+##Acknowledgments
+Noroff API Docs
 
-## Learn More
+React documentation
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+TailwindCSS documentation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+React Router documentation
