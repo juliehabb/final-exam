@@ -1,7 +1,6 @@
 import React, { useState, useEffect} from "react";
 import type { Venue } from "../api/holidaze/venues";
 import VenueCard from "../components/VenueCard";
-import NavBar from "../components/nav";
 import SearchBar from "../components/Home/SearchBar";
 import SideBar from "../components/Home/SideBar";
 
