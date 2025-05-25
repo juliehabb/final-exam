@@ -215,7 +215,7 @@ export default function VenueDetails({ venue }: VenueDetailsProps) {
 
           <button
             onClick={handleBooking}
-            className="w-full py-3 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition"
+            className="w-full py-3 bg-blue-400 text-black font-semibold rounded-xl hover:bg-indigo-700 transition"
           >
             Book
           </button>
