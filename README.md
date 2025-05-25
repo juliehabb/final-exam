@@ -24,7 +24,6 @@ Live site: [https://juliehabb.github.io/final-exam](https://juliehabb.github.io/
 
 1. Clone the repository:
 
-```bash
 git clone https://github.com/juliehabb/final-exam.git
 cd final-exam
 
