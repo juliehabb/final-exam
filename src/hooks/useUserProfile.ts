@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import type { Booking } from "../api/holidaze/bookings";
 import type { Venue } from "../api/holidaze/venues";
 
+/**
+ * Structure of a user's profile from the Noroff Holidaze API.
+ */
 type UserProfile = {
     name: string;
     email: string;
@@ -11,6 +14,15 @@ type UserProfile = {
     venues: Venue[];
   };
 
+  /**
+ * A React hook that fetches a user's profile including their bookings and venues.
+ *
+ * @param {string} username - The username to fetch data for
+ * @returns An object containing:
+ *   - profile: The user's full profile data or null
+ *   - loading: True while loading
+ *   - error: Any error message or null
+ */
   export function useUserProfile(username: string) {
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);

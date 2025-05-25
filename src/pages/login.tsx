@@ -3,6 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { AuthForm } from "../components/authform";
 import { useLogin } from "../hooks/useLogin";
 
+/**
+ * Login page component
+ * Allows a user to log in using email and password.
+ * Stores the token, API key, and user data in localStorage on success.
+ */
 export default function LoginPage() {
   const navigate = useNavigate();
   const { login, loading, error } = useLogin();
@@ -10,6 +15,13 @@ export default function LoginPage() {
   const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
 
+  /**
+   * Handles form submission:
+   * - Sends login request
+   * - Retrieves user profile
+   * - Saves session info to localStorage
+   * - Navigates to the homepage
+   */
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     try {

@@ -1,11 +1,23 @@
 import { useEffect, useState } from "react";
 
+/**
+ * Represents a single booking entry.
+ */
 export type Booking = {
   id: string;
   dateFrom: string;
   dateTo: string;
 };
 
+/**
+ * React hook to fetch bookings for a specific venue.
+ *
+ * @param {string} venueId - The ID of the venue whose bookings you want to retrieve.
+ * @returns An object with:
+ *   - bookings: Array of bookings.
+ *   - loading: Boolean, true while fetching.
+ *   - error: Error message if the request fails.
+ */
 export function useVenueBookings(venueId: string) {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);

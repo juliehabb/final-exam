@@ -1,6 +1,14 @@
 import { useState, useEffect } from "react";
 import { getAllVenues, Venue} from "../api/holidaze/venues";
 
+/**
+ * Custom hook to fetch all venues from the Holidaze API.
+ *
+ * @returns An object with:
+ * - venues: Array of Venue objects.
+ * - loading: Boolean indicating if data is still loading.
+ * - error: String if an error occurred, otherwise null.
+ */
 export function useVenues() {
     const [venues, setVenues] = useState<Venue[]>([]);
     const [loading, setLoading] = useState(true);

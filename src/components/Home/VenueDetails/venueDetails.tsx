@@ -15,6 +15,10 @@ type Booking = {
   dateTo: string;
 };
 
+/**
+ * Component that renders venue details and a booking form.
+ * @param venue - Data for the selected venue.
+ */
 export default function VenueDetails({ venue }: VenueDetailsProps) {
   const { name, location, price, description, id } = venue;
 
@@ -50,7 +54,11 @@ export default function VenueDetails({ venue }: VenueDetailsProps) {
 
     fetchBookings();
   }, [id]);
-
+  /**
+   * Turns a list of bookings into an array of all unavailable individual dates.
+   * @param bookings - List of bookings for the venue.
+   * @returns Dates that are already booked.
+   */
   function getUnavailableDates(bookings: Booking[]) {
     const excluded: Date[] = [];
 
@@ -67,7 +75,11 @@ export default function VenueDetails({ venue }: VenueDetailsProps) {
 
     return excluded;
   }
-
+  
+    /**
+   * Attempts to book the venue with the selected info.
+   * Shows success or error messages.
+   */
   const handleBooking = async () => {
     setBookingError(null);
     setBookingSuccess(false);

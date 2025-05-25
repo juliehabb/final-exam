@@ -1,6 +1,16 @@
 import React, { ReactNode, FormEvent} from "react";
 import { Link } from "react-router-dom";
 
+/**
+ * Props for the AuthForm component.
+ * 
+ * @property title - Heading at the top of the form (e.g. "Login" or "Register")
+ * @property submitLabel - Text shown on the submit button
+ * @property onSubmit - Function to call when the form is submitted
+ * @property children - Form fields passed in from parent component
+ * @property bottomLinkText - Text for the link shown below the form
+ * @property bottomLinkTo - Path to navigate when the bottom link is clicked
+ */
 type AuthFormProps = {
     title: string;
     submitLabel: string;
@@ -10,6 +20,11 @@ type AuthFormProps = {
     bottomLinkTo: string;
 };
 
+/**
+ * A reusable authentication form component.
+ * 
+ * Use this for both login and register pages to maintain consistent design.
+ */
 export function AuthForm({
     title,
     submitLabel,

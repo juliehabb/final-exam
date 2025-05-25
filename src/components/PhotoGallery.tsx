@@ -1,10 +1,18 @@
 import React from "react";
 import { useState } from "react";
 
+/** List of image URLs to display */
 type PhotoGalleryProps = {
   images: string[];
 };
 
+
+/**
+ * A photo gallery component with thumbnails and lightbox preview.
+ * 
+ * @param {PhotoGalleryProps} props - The component props
+ * @returns JSX for the image gallery
+ */
 export default function PhotoGallery({ images }: PhotoGalleryProps) {
   const THUMB_COUNT = 4;
   const hasMore = images.length > THUMB_COUNT;
@@ -13,6 +21,10 @@ export default function PhotoGallery({ images }: PhotoGalleryProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
+    /**
+   * Open the lightbox at a specific image index
+   * @param i number - Index of the image to open
+   */
   function openAt(i: number) {
     setCurrentIndex(i);
     setLightboxOpen(true);

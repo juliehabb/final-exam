@@ -1,4 +1,7 @@
 
+/**
+ * Represents detailed information about a single venue.
+ */
 export type VenueDetail = {
     id: string;
     name: string;
@@ -11,6 +14,9 @@ export type VenueDetail = {
     location: { address: string; city: string; zip: string; country: string };
   };
   
+  /**
+ * Structure of the API response when fetching a single venue's details.
+ */
   export type VenueDetailResponse = {
     data: VenueDetail;
     meta: Record<string, unknown>;
@@ -18,6 +24,16 @@ export type VenueDetail = {
   
   const BASE_URL = "https://v2.api.noroff.dev";
   
+  /**
+ * Fetches detailed information for a single venue by its ID.
+ *
+ * This function sends a GET request to the Noroff API and retrieves all
+ * details for a venue, including media, location, and amenities.
+ *
+ * @param {string} id - The unique ID of the venue to fetch.
+ * @returns {Promise<VenueDetailResponse>} A promise that resolves with venue details.
+ * @throws {Error} If the fetch fails or the venue cannot be found.
+ */
   export async function getVenue(id: string): Promise<VenueDetailResponse> {
     const res = await fetch(`${BASE_URL}/holidaze/venues/${id}`);
     const json = await res.json();

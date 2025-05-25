@@ -1,4 +1,8 @@
-// 1) Data you send when registering
+/**
+ * This is the shape of the data you need to send when registering.
+ * You must include name, email, and password.
+ * You can optionally include a bio and specify if the user is a venue manager.
+ */
 export type RegisterData = {
     name: string;
     email: string;
@@ -7,7 +11,9 @@ export type RegisterData = {
     venueManager?: boolean;
   };
   
-  // 2) User profile shape returned by the API
+  /**
+ * This is what the API returns about the newly created user.
+ */
   export type UserProfile = {
     id: number;
     name: string;
@@ -16,16 +22,35 @@ export type RegisterData = {
     venueManager?: boolean;
   };
   
-  // 3) Full response from POST /auth/register
+ /**
+ * This is the full response returned by the API when registration is successful.
+ */
   export type RegisterResponse = {
     data: UserProfile;
     meta: Record<string, unknown>;
   };
   
-  // 4) Base URL for v2 API
   const BASE_URL = "https://v2.api.noroff.dev";
   
-  // 5) Perform the registration call
+  /**
+ * Registers a new user with the system.
+ *
+ * @param {RegisterData} payload - An object with name, email, password, and optional bio or manager status.
+ * @returns {Promise<RegisterResponse>} - Returns info about the new user if registration is successful.
+ * @throws {Error} - If registration fails, an error message is shown.
+ *
+ * Example:
+ * ```ts
+ * const newUser = {
+ *   name: "NewUser",
+ *   email: "newuser@stud.noroff.no",
+ *   password: "securePass123",
+ *   venueManager: true
+ * };
+ * const response = await registerApi(newUser);
+ * console.log(response.data.name); // "NewUser"
+ * ```
+ */
   export async function registerApi(
     payload: RegisterData
   ): Promise<RegisterResponse> {
@@ -38,7 +63,6 @@ export type RegisterData = {
     const json = await res.json();
   
     if (!res.ok) {
-      // Gather any validation error messages
       const apiErrors = Array.isArray((json as any).errors)
         ? (json as any).errors.map((e: any) => e.message).join("; ")
         : null;

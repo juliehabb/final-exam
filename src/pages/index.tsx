@@ -5,7 +5,9 @@ import NavBar from "../components/nav";
 import SearchBar from "../components/Home/SearchBar";
 import SideBar from "../components/Home/SideBar";
 
-
+/**
+ * Usernames that are allowed to display venues when logged in.
+ */
 const allowedUsers = [
   "BulieVM2",
   "BulieRegularU",
@@ -13,12 +15,19 @@ const allowedUsers = [
   "NewTestUserJ"
 ];
 
+/**
+ * HomePage displays a list of venues either fetched from public or filtered by user access.
+ * Users can search for venues, and results are filtered by name.
+ */
 export default function HomePage() {
   const [venues, setVenues] = useState<Venue[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
 
+  /**
+   * Fetches venues based on user login state and allowed user filter.
+   */
 useEffect(() => {
   async function fetchVenues() {
     const token = localStorage.getItem("token");
@@ -72,7 +81,9 @@ useEffect(() => {
 }, []);
 
 
-
+  /**
+   * Transforms meta properties into human-readable amenity names.
+   */
   function amenitiesFrom(meta: Record<string, boolean>) {
     return Object.entries(meta)
       .filter(([_, v]) => v)
@@ -88,7 +99,10 @@ useEffect(() => {
           : k
       );
   }
-
+  
+  /**
+   * Filters venues based on the user's search input.
+   */
   const searchFiltered = venues.filter((v) =>
     v.name.toLowerCase().includes(searchTerm.toLowerCase())
   );

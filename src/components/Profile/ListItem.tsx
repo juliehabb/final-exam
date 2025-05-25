@@ -1,5 +1,12 @@
 import React, { ReactNode } from "react";
 
+/**
+ * Props for the ListItem component.
+ * @property image - URL of the image to display.
+ * @property title - Main title text.
+ * @property subtitle - Secondary text below the title.
+ * @property actions - Optional action elements (e.g., buttons or icons).
+ */
 type ListItemProps = {
   image: string;
   title: string;
@@ -7,6 +14,12 @@ type ListItemProps = {
   actions?: ReactNode;
 };
 
+/**
+ * A reusable list item component that shows an image, title, subtitle,
+ * and optional action buttons/icons.
+ *
+ * Useful for things like venue or booking items in a list.
+ */
 export function ListItem({ image, title, subtitle, actions }: ListItemProps) {
   return (
     <div className="flex items-center bg-white rounded-xl shadow p-4">

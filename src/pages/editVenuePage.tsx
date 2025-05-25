@@ -3,6 +3,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getVenueById, updateVenue } from "../api/holidaze/venues";
 import type { NewVenueData, Venue } from "../api/holidaze/venues";
 
+/**
+ * EditVenuePage is a React component that displays a form for editing a venue.
+ * It loads the current venue details using the ID from the URL,
+ * and allows the user to modify and submit updated data.
+ */
 export default function EditVenuePage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -10,6 +15,7 @@ export default function EditVenuePage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
+  // Fetch venue details on load
   useEffect(() => {
     async function fetchVenue() {
       try {
@@ -24,6 +30,9 @@ export default function EditVenuePage() {
     fetchVenue();
   }, [id]);
 
+  /**
+   * Handles form submission to update the venue.
+   */
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!venue) return;

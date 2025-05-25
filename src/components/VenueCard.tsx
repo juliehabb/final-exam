@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
 
+
+/**
+ * Props for the VenueCard component.
+ */
 type VenueCardProps = {
   id: string;
   image: string;
@@ -10,6 +14,11 @@ type VenueCardProps = {
   amenities: string[];
 };
 
+/**
+ * A card component to display venue information such as title, image, rating, and price.
+ *
+ * @param {VenueCardProps} props - Props including id, image, title, location, rating, price, and amenities
+ */
 export default function VenueCard({
   id,
   image,

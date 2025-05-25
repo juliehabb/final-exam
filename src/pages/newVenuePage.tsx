@@ -5,10 +5,14 @@ import { useNavigate }      from "react-router-dom";
 import { useCreateVenue } from "../hooks/useCreateVenues";
 import type { NewVenueData } from "../api/holidaze/venues";
 
+/**
+ * Page for creating a new venue.
+ * Uses form state for all input fields, submits to Holidaze API.
+ */
 export default function NewVenuePage() {
     const navigate = useNavigate();
     const { createVenue, loading, error } = useCreateVenue();
-
+    // Input states for venue fields
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [mediaUrl, setMediaUrl] = useState("");
@@ -24,6 +28,9 @@ export default function NewVenuePage() {
     const [zip, setZip] = useState("");
     const [country, setCountry] = useState("");
 
+    /**
+   * Submits form data to create a new venue.
+   */
         async function handleSubmit(e: FormEvent) {
         e.preventDefault();
         const payload: NewVenueData = {
@@ -192,6 +199,4 @@ export default function NewVenuePage() {
       </form>
     </div>
   );
-
-    
 }

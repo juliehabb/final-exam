@@ -1,10 +1,16 @@
-// 1) Credentials you send when logging in
+/**
+ * This is the shape of the login information you need to send to the API.
+ * You provide an email and a password.
+ */
 export type LoginData = {
     email: string;
     password: string;
   };
   
-  // 2) Response from POST /auth/login
+  /**
+ * This is the structure of the response you get when the login is successful.
+ * It includes your access token, name, and optional profile info.
+ */
   export type LoginResponse = {
     data: {
       accessToken: string;          
@@ -19,7 +25,20 @@ export type LoginData = {
   
   const BASE_URL = "https://v2.api.noroff.dev";
   
-  // 3) Perform the login call
+  /**
+ * Logs a user into the system using email and password.
+ *
+ * @param {LoginData} payload - An object with your email and password.
+ * @returns {Promise<LoginResponse>} - If successful, returns info like your token and name.
+ * @throws {Error} - If login fails, an error message is shown.
+ *
+ * Example:
+ * ```ts
+ * const credentials = { email: "your@email.com", password: "password123" };
+ * const userInfo = await loginApi(credentials);
+ * console.log(userInfo.data.accessToken); // this is your login token
+ * ```
+ */
   export async function loginApi(payload: LoginData): Promise<LoginResponse> {
     const res = await fetch(`${BASE_URL}/auth/login`, {
       method: "POST",

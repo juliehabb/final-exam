@@ -14,6 +14,12 @@ import { deleteVenue } from "../api/holidaze/venues"
 import type { Booking } from "../api/holidaze/bookings"
 import { getVenueById } from "../api/holidaze/venues"
 
+/**
+ * Profile page showing:
+ * - Current user's profile information
+ * - Bookings they have made
+ * - Venues they manage (if a venue manager)
+ */
 export default function ProfilePage() {
   const navigate = useNavigate();
   const userJson = localStorage.getItem("user");
@@ -28,6 +34,9 @@ export default function ProfilePage() {
   const [modalVenueName, setModalVenueName] = useState<string>("");
   const [modalBookings, setModalBookings] = useState<Booking[]>([]);
 
+  /**
+   * Opens a modal showing the bookings for a specific venue
+   */
   async function openBookingModal(venue: Venue) {
   try {
 
@@ -50,6 +59,9 @@ export default function ProfilePage() {
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [cancelBookingId, setCancelBookingId] = useState<string | null>(null);
 
+  /**
+   * Saves updated profile bio/avatar
+   */
   async function handleProfileUpdate(e: React.FormEvent) {
     e.preventDefault();
     try {

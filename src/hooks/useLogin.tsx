@@ -2,13 +2,25 @@ import { useState } from "react";
 import { loginApi, LoginData, LoginResponse } from "../api/auth/login";
 import { createApiKey }     from "../api/auth/apiKey";
 
+ /**
+ * A custom hook to handle user login and API key creation.
+ *
+ * @returns {Object} - An object containing:
+ *   - login: Function to login the user and create an API key
+ *   - loading: Boolean showing if login is in progress
+ *   - error: Error message if something goes wrong
+ */
 export function useLogin() {
   const [loading, setLoading] = useState(false);
   const [error, setError]     = useState<string | null>(null);
 
-  /**
-   * Logs in the user and then creates an API key.
-   * @returns the login response and the newly created API key
+ 
+/**
+   * Logs in the user using their email and password, then generates an API key.
+   *
+   * @param {LoginData} data - Contains email and password
+   * @returns {Promise<{ loginResult: LoginResponse, apiKey: string }>} - login response and API key
+   * @throws Will throw an error if login or API key generation fails
    */
   async function login(
     data: LoginData

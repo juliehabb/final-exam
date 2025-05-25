@@ -1,6 +1,11 @@
+/**
+ * @file Handles all API operations related to venues on the Holidaze platform.
+ */
 import type { Booking } from "./bookings"
 
-// 1) Shape of a single venue (only the fields rendered + owner.email)
+/**
+ * A simplified Venue type used across the app.
+ */
 export type Venue = {
   id: string
   name: string
@@ -56,10 +61,12 @@ export type NewVenueData = {
   }
 }
 
-// 4) Base path
+
 const BASE = "https://v2.api.noroff.dev/holidaze"
 
-// 5) Helper to attach auth headers if available
+/**
+ * Fetches all venues from the API.
+ */
 function authHeaders(): Record<string,string> {
   const h: Record<string,string> = { "Content-Type": "application/json" }
   const token = localStorage.getItem("token")
@@ -69,7 +76,11 @@ function authHeaders(): Record<string,string> {
   return h
 }
 
-// 6) Fetch all venues
+/**
+ * Fetches a single venue by ID, including bookings.
+ * 
+ * @param id The venue ID to fetch.
+ */
 export async function getAllVenues(): Promise<VenuesResponse> {
   const res  = await fetch(`${BASE}/venues`, { headers: authHeaders() })
   const json = await res.json()
@@ -77,7 +88,11 @@ export async function getAllVenues(): Promise<VenuesResponse> {
   return json as VenuesResponse
 }
 
-// 7) Fetch a single venue
+/**
+ * Fetches a single venue by ID, including bookings.
+ * 
+ * @param id The venue ID to fetch.
+ */
 export async function getVenueById(id: string): Promise<{ data: Venue }> {
   const res = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}?_bookings=true`, {
     headers: authHeaders(),
@@ -87,7 +102,11 @@ export async function getVenueById(id: string): Promise<{ data: Venue }> {
   return json as { data: Venue };
 }
 
-// 8) Create a new venue
+/**
+ * Creates a new venue.
+ * 
+ * @param payload The data for the new venue.
+ */
 export async function createVenueApi(
   payload: NewVenueData
 ): Promise<CreateVenueResponse> {
@@ -106,7 +125,11 @@ export async function createVenueApi(
   return json as CreateVenueResponse
 }
 
-// 9) Fetch all venues by profile name (not email!)
+/**
+ * Fetches all venues owned by a given profile.
+ * 
+ * @param profileName The profile name (username).
+ */
 export async function getVenuesByProfile(
   profileName: string
 ): Promise<VenuesResponse> {
@@ -119,6 +142,12 @@ export async function getVenuesByProfile(
   return json as VenuesResponse
 }
 
+/**
+ * Updates an existing venue.
+ * 
+ * @param id The venue ID.
+ * @param payload The updated venue data.
+ */
 export async function updateVenue(id: string, payload: NewVenueData): Promise<CreateVenueResponse> {
   const res = await fetch(`${BASE}/venues/${id}`, {
     method: "PUT",
@@ -133,6 +162,11 @@ export async function updateVenue(id: string, payload: NewVenueData): Promise<Cr
   return json as CreateVenueResponse;
 }
 
+/**
+ * Deletes a venue by ID.
+ * 
+ * @param id The venue ID to delete.
+ */
 export async function deleteVenue(id:string): Promise<void> {
   const res = await fetch(`https://v2.api.noroff.dev/holidaze/venues/${id}`, {
     method: "DELETE",

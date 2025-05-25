@@ -1,11 +1,21 @@
 import React from "react";
 
+/**
+ * Props for the ProfileHeader component.
+ * @property avatarUrl - URL of the user's profile image.
+ * @property name - The user's display name.
+ * @property bio - A short biography or user description.
+ */
 type ProfileHeaderProps = {
     avatarUrl: string;
     name: string;
     bio: string;
 };
 
+/**
+ * Displays a user's profile banner, avatar, name, and bio.
+ * Used at the top of a profile page to visually represent the logged-in user.
+ */
 export function ProfileHeader ({ avatarUrl, name, bio }: ProfileHeaderProps) {
     return (
         <div className="relative bg-gradient-to-r from-accent-light to-accent p-16">

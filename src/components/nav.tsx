@@ -3,11 +3,22 @@ import { Link } from "react-router-dom";
 import { FaRegHeart, FaUser, FaTimes, FaBars } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Navigation bar component for the top of the page.
+ * 
+ * Shows login/logout, user profile, theme toggles, and a mobile menu.
+ * 
+ * Automatically adjusts layout for mobile vs. desktop.
+ */
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user") || "null");
 
+  
+  /**
+   * Logs out the current user by clearing localStorage and redirecting to login.
+   */
   function handleLogout() {
     localStorage.removeItem("token");
     localStorage.removeItem("apiKey");

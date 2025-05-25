@@ -1,4 +1,6 @@
-// Shared type for all booking usage
+/**
+ * Represents a single booking returned from the API.
+ */
 export type Booking = {
   id: string;
   dateFrom: string;
@@ -13,6 +15,9 @@ export type Booking = {
   };
 };
 
+/**
+ * Data needed to create a new booking.
+ */
 export type CreateBookingData = {
   dateFrom: string;
   dateTo: string;
@@ -20,6 +25,9 @@ export type CreateBookingData = {
   venueId: string;
 };
 
+/**
+ * The response structure when a booking is successfully created.
+ */
 export type BookingResponse = {
   data: Booking;
   meta: Record<string, unknown>;
@@ -27,6 +35,14 @@ export type BookingResponse = {
 
 const BASE_URL = "https://v2.api.noroff.dev";
 
+/**
+ * Creates a new booking.
+ *
+ * @param {CreateBookingData} payload - Info about the booking (dates, guests, venue).
+ * @param {string} token - The user's login token.
+ * @returns {Promise<BookingResponse>} - Returns the created booking info.
+ * @throws {Error} - Throws if missing credentials or the API returns an error.
+ */
 export async function createBooking(
   payload: CreateBookingData,
   token: string
@@ -60,7 +76,12 @@ export async function createBooking(
 
 
 /**
- * Fetch bookings for a specific venue (for venue managers to see when it's booked)
+ * Fetch a single booking by its ID.
+ * Note: This is for getting detailed info about one booking, not a list.
+ *
+ * @param {string} id - The booking ID.
+ * @returns {Promise<Booking[]>} - Returns the single booking as an array.
+ * @throws {Error} - Throws if request fails or missing credentials.
  */
 
 export async function getBookingsByVenue(id: string): Promise<Booking[]> {
@@ -92,6 +113,13 @@ export async function getBookingsByVenue(id: string): Promise<Booking[]> {
   return data.data as Booking[];
 }
 
+/**
+ * Deletes a booking by ID.
+ *
+ * @param {string} id - The ID of the booking to delete.
+ * @returns {Promise<void>} - Completes if successful.
+ * @throws {Error} - Throws if delete fails or missing auth info.
+ */
 export async function deleteBooking (id: string): Promise<void> {
   const token = localStorage.getItem("token");
   const apiKey = localStorage.getItem("apiKey");

@@ -4,8 +4,14 @@ import PhotoGallery from "../components/PhotoGallery";
 import VenueDetails from "../components/Home/VenueDetails/venueDetails";
 import { useVenue } from "../hooks/useVenue";
 
+/**
+ * VenuePage displays detailed information about a single venue.
+ * It fetches the venue data using the venue ID from the URL.
+ */
 export default function VenuePage() {
+  // Get venue ID from route parameters
     const { id } = useParams<{ id: string }>();
+    // Fetch venue details using the custom hook
     const { venue, loading, error } = useVenue(id!);
   
     if (loading) return <p>Loading venue…</p>;

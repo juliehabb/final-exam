@@ -1,12 +1,20 @@
 import React from "react";
 import { FaHotel, FaBuilding, FaHome } from "react-icons/fa";
 
+/**
+ * Items to show in the sidebar.
+ * Each item includes an icon and a label.
+ */
 const sidebarItems = [
   { icon: <FaHotel size={32} />, label: "Hotel" },
   { icon: <FaBuilding size={32} />, label: "Apartment" },
   { icon: <FaHome size={32} />, label: "Home" },
 ];
 
+/**
+ * SideBar component that displays clickable buttons
+ * for different types of venue categories.
+ */
 const SideBar = () => (
   <aside className=" flex flex-col items-center gap-6">
     {sidebarItems.map((item) => (

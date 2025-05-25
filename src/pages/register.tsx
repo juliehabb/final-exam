@@ -4,15 +4,25 @@ import { useRegister } from "../hooks/useRegister";
 import { RegisterData } from "../api/auth/register";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Registration page for new users.
+ * Includes support for becoming a venue manager.
+ */
 export default function RegisterPage() {
     const navigate = useNavigate();
     const { register, loading, error} = useRegister();
+
+     // Form state variables
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [bio, setBio] = useState("");
     const [venueManager, setVenueManager] = useState(false);
 
+    /**
+   * Handles registration form submission.
+   * Sends the registration request and redirects to login on success.
+   */
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 

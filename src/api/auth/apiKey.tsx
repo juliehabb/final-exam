@@ -1,4 +1,7 @@
-// 1) Response from POST /auth/create-api-key
+/**
+ * This is the format of the response we get when we create an API key.
+ * It has a 'data' part that includes the key, and a 'meta' part with extra info.
+ */
 export type ApiKeyResponse = {
     data: { key: string };
     meta: Record<string, unknown>;
