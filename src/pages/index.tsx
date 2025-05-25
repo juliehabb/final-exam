@@ -69,7 +69,9 @@ useEffect(() => {
   }
 
   fetchVenues();
-  }, []);
+}, []);
+
+
 
   function amenitiesFrom(meta: Record<string, boolean>) {
     return Object.entries(meta)
@@ -95,36 +97,46 @@ useEffect(() => {
     <>
       <NavBar />
       <main className="p-4">
-        <SearchBar value={searchTerm} onChange={setSearchTerm} />
-        <section className="flex gap-4">
-          <SideBar />
-          <div className="flex-1">
-            {loading && <p>Loading your venues…</p>}
-            {error && <p className="text-red-500">{error}</p>}
+  {/* Top search bar across full width */}
+  <div className="max-w-full mb-6">
+    <SearchBar value={searchTerm} onChange={setSearchTerm} />
+  </div>
 
-            {!loading && !error && (
-              <div className="flex flex-wrap gap-8 justify-center py-8">
-                {searchFiltered.length > 0 ? (
-                  searchFiltered.map((v) => (
-                    <VenueCard
-                      key={v.id}
-                      id={v.id}
-                      image={v.media[0]?.url || ""}
-                      title={v.name}
-                      location={`${v.location.city}, ${v.location.country}`}
-                      rating={v.rating}
-                      price={v.price}
-                      amenities={amenitiesFrom(v.meta)}
-                    />
-                  ))
-                ) : (
-                  <p>No venues found.</p>
-                )}
-              </div>
-            )}
-          </div>
-        </section>
+  {/* Layout: Sidebar + Grid */}
+  <section className="flex gap-4">
+    {/* Sidebar aligned with grid */}
+    <div className="pt-10">
+      <SideBar />
+    </div>
+
+    <div className="flex-1">
+      {loading && <p>Loading your venues…</p>}
+      {error && <p className="text-red-500">{error}</p>}
+
+      {!loading && !error && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 py-8">
+          {searchFiltered.length > 0 ? (
+            searchFiltered.map((v) => (
+              <VenueCard
+                key={v.id}
+                id={v.id}
+                image={v.media[0]?.url || ""}
+                title={v.name}
+                location={`${v.location.city}, ${v.location.country}`}
+                rating={v.rating}
+                price={v.price}
+                amenities={amenitiesFrom(v.meta)}
+              />
+            ))
+          ) : (
+            <p>No venues found.</p>
+          )}
+        </div>
+      )}
+    </div>
+  </section>
       </main>
+
     </>
   );
 }
