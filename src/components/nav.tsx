@@ -30,7 +30,7 @@ const NavBar = () => {
     <nav className="bg-white shadow px-4 sm:px-6 py-4 flex items-center justify-between relative">
       {/* Logo */}
       <Link to="/" aria-label="Home">
-        <div className="w-10 h-10 bg-gray-200 rounded-full" />
+        <h3 className="font-bold">Holidaze</h3>
       </Link>
 
       {/* Desktop Nav */}
