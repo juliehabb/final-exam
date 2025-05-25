@@ -14,8 +14,6 @@ import { deleteVenue } from "../api/holidaze/venues"
 import type { Booking } from "../api/holidaze/bookings"
 import { getVenueById } from "../api/holidaze/venues"
 
-
-
 export default function ProfilePage() {
   const navigate = useNavigate();
   const userJson = localStorage.getItem("user");
