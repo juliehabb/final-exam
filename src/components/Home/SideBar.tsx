@@ -22,8 +22,4 @@ const SideBar = () => (
   </aside>
 );
 
-
-
-
-
 export default SideBar;

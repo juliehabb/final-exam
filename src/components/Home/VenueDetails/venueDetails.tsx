@@ -91,7 +91,6 @@ export default function VenueDetails({ venue }: VenueDetailsProps) {
       venueId: id,
     };
 
-    console.log(" Booking payload:", payload);
 
     try {
       const response = await createBooking(payload, token);

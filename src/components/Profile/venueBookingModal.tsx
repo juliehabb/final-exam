@@ -39,7 +39,6 @@ export function VenueBookingModal({ venueName, bookings, onClose }: Props) {
                 highlightDates={datesBooked}
                 disabledKeyboardNavigation
                 />
-
             </div>
         </div>
     );

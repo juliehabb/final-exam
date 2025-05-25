@@ -34,13 +34,10 @@ export default function LoginPage() {
       }
 
       const fullUser = profileJson.data;
-      console.log("Full user profile:", fullUser);
 
-
-      // Store token and API key
       localStorage.setItem("token", token);
-       localStorage.setItem("apiKey", apiKey);
-       localStorage.setItem("user", JSON.stringify(fullUser));
+      localStorage.setItem("apiKey", apiKey);
+      localStorage.setItem("user", JSON.stringify(fullUser));
   
       navigate("/");
     } catch (err: any) {

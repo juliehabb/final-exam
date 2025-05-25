@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getAllVenues, Venue, VenuesResponse } from "../api/holidaze/venues";
+import { getAllVenues, Venue} from "../api/holidaze/venues";
 
 export function useVenues() {
     const [venues, setVenues] = useState<Venue[]>([]);

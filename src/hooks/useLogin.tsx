@@ -16,7 +16,7 @@ export function useLogin() {
     setLoading(true);
     setError(null);
     try {
-      // 1) Perform login to get the JWT
+      // 1) login to get the JWT
       const loginResult = await loginApi(data);
       const token       = loginResult.data.accessToken;
 

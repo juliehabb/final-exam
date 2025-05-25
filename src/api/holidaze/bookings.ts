@@ -59,8 +59,6 @@ export async function createBooking(
 }
 
 
-
-
 /**
  * Fetch bookings for a specific venue (for venue managers to see when it's booked)
  */

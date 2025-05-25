@@ -4,7 +4,6 @@ import PhotoGallery from "../components/PhotoGallery";
 import VenueDetails from "../components/Home/VenueDetails/venueDetails";
 import { useVenue } from "../hooks/useVenue";
 
-
 export default function VenuePage() {
     const { id } = useParams<{ id: string }>();
     const { venue, loading, error } = useVenue(id!);

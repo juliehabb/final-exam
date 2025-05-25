@@ -13,17 +13,13 @@ export default function RegisterPage() {
     const [bio, setBio] = useState("");
     const [venueManager, setVenueManager] = useState(false);
 
-
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
     const payload: RegisterData = { name, email, password, bio,venueManager};
     try {
-        const result = await register(payload);
-        console.log("Full registration result:", result);
-        console.log("registered user (data)", result.data);
+        await register(payload);
         navigate("/login");
-        
     } catch (err) {
         console.error("Registration error:", err)
     }

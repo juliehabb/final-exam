@@ -69,9 +69,7 @@ useEffect(() => {
   }
 
   fetchVenues();
-}, []);
-
-
+  }, []);
 
   function amenitiesFrom(meta: Record<string, boolean>) {
     return Object.entries(meta)
@@ -98,10 +96,8 @@ useEffect(() => {
       <NavBar />
       <main className="p-4">
         <SearchBar value={searchTerm} onChange={setSearchTerm} />
-
         <section className="flex gap-4">
           <SideBar />
-
           <div className="flex-1">
             {loading && <p>Loading your venues…</p>}
             {error && <p className="text-red-500">{error}</p>}

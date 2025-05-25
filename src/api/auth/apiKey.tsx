@@ -19,7 +19,6 @@ export type ApiKeyResponse = {
     });
   
     const json = await res.json();
-    console.log("createApiKey response:", res.status, json);
   
     if (!res.ok) {
       const errMsg = (json as any).message || `HTTP ${res.status}`;

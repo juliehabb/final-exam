@@ -4,7 +4,6 @@ import React, { FormEvent, useState } from "react";
 import { useNavigate }      from "react-router-dom";
 import { useCreateVenue } from "../hooks/useCreateVenues";
 import type { NewVenueData } from "../api/holidaze/venues";
-import { FaTimes } from "react-icons/fa";
 
 export default function NewVenuePage() {
     const navigate = useNavigate();
@@ -25,7 +24,7 @@ export default function NewVenuePage() {
     const [zip, setZip] = useState("");
     const [country, setCountry] = useState("");
 
-    async function handleSubmit(e: FormEvent) {
+        async function handleSubmit(e: FormEvent) {
         e.preventDefault();
         const payload: NewVenueData = {
             name,
@@ -41,9 +40,7 @@ export default function NewVenuePage() {
         };
 
         try {
-            const result = await createVenue(payload);
-            console.log(" Created venue response:", result);
-            console.log(" New venue data:", result.data);
+            await createVenue(payload);
             navigate("/profile");
         } catch (err:any) { 
             console.error("Failed to create venue:", err);
@@ -54,7 +51,7 @@ export default function NewVenuePage() {
  return (
     <div className="relative max-w-lg mx-auto mt-16 p-6 bg-white rounded-2xl shadow-lg space-y-4">
         <button
-         onClick={() => navigate(-1)} // or a specific route like navigate("/profile")
+         onClick={() => navigate(-1)}
          className=" absolute top-4 right-4 text-2xl text-gray-500 hover:text-blue-500"
         aria-label="Close create venue form"
          >
