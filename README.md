@@ -45,7 +45,7 @@ Make sure the homepage field in package.json is set correctly:
 Julie Habb
 GitHub @juliehabb
 
-##Acknowledgments
+## Acknowledgments
 Noroff API Docs
 
 React documentation
