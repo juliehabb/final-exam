@@ -15,6 +15,14 @@ const allowedUsers = [
 ];
 
 /**
+ * Generates a consistent mock rating from the venue ID
+ */
+function mockRating(id: string) {
+  const seed = id.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return parseFloat((3 + (seed % 20) * 0.1).toFixed(1)); // 3.0 - 5.0 range
+}
+
+/**
  * HomePage displays a list of venues either fetched from public or filtered by user access.
  * Users can search for venues, and results are filtered by name.
  */
@@ -125,6 +133,8 @@ useEffect(() => {
       {loading && <p>Loading your venues…</p>}
       {error && <p className="text-red-500">{error}</p>}
 
+      
+
       {!loading && !error && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 py-8">
           {searchFiltered.length > 0 ? (
@@ -135,7 +145,7 @@ useEffect(() => {
                 image={v.media[0]?.url || ""}
                 title={v.name}
                 location={`${v.location.city}, ${v.location.country}`}
-                rating={v.rating}
+                rating={v.rating > 0 ? v.rating : mockRating(v.id)}
                 price={v.price}
                 amenities={amenitiesFrom(v.meta)}
               />
