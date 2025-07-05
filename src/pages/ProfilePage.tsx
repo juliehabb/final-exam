@@ -1,18 +1,17 @@
-import React, { useState} from "react"
-import { Link, useNavigate } from "react-router-dom"
-import { FaPlus, FaEdit, FaTrash } from "react-icons/fa"
-import { ProfileHeader } from "../components/Profile/ProfileHeader"
-import { Panel }         from "../components/Profile/Panel"
-import { ListItem }      from "../components/Profile/ListItem"
-import { useUserVenues } from "../hooks/useUsersVenues"
-import { useUserProfile } from "../hooks/useUserProfile"
-import { VenueBookingModal } from "../components/Profile/venueBookingModal"
-import { deleteBooking } from "../api/holidaze/bookings"
-import { updateProfile } from "../api/holidaze/profiles"
-import type { Venue }    from "../api/holidaze/venues"
-import { deleteVenue } from "../api/holidaze/venues"
-import type { Booking } from "../api/holidaze/bookings"
-import { getVenueById } from "../api/holidaze/venues"
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FaPlus, FaEdit, FaTrash } from "react-icons/fa";
+import { ProfileHeader } from "../components/Profile/ProfileHeader";
+import { Panel } from "../components/Profile/Panel";
+import { ListItem } from "../components/Profile/ListItem";
+import { useUserVenues } from "../hooks/useUsersVenues";
+import { useUserProfile } from "../hooks/useUserProfile";
+import { VenueBookingModal } from "../components/Profile/venueBookingModal";
+import { deleteBooking } from "../api/holidaze/bookings";
+import { updateProfile } from "../api/holidaze/profiles";
+import type { Venue } from "../api/holidaze/venues";
+import { deleteVenue, getVenueById } from "../api/holidaze/venues";
+import type { Booking } from "../api/holidaze/bookings";
 
 /**
  * Profile page showing:
@@ -34,41 +33,50 @@ export default function ProfilePage() {
   const [modalVenueName, setModalVenueName] = useState<string>("");
   const [modalBookings, setModalBookings] = useState<Booking[]>([]);
 
-  /**
-   * Opens a modal showing the bookings for a specific venue
-   */
-  async function openBookingModal(venue: Venue) {
-  try {
-
-    const res = await getVenueById(venue.id);
-    const venueWithBookings = res.data;
-
-    const bookings = venueWithBookings.bookings || [];
-
-    setModalVenueName(venue.name);
-    setModalBookings(bookings);
-    setModalVenueId(venue.id);
-  } catch (err: any) {
-    console.error("Failed to fetch bookings for venue:", err.message);
-  }
-}
-
   const [showEdit, setShowEdit] = useState(false);
   const [bio, setBio] = useState(user?.bio || "");
   const [avatarUrl, setAvatarUrl] = useState(user?.avatar?.url || "");
+  const [bannerUrl, setBannerUrl] = useState(user?.banner?.url || "");
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
   const [cancelBookingId, setCancelBookingId] = useState<string | null>(null);
 
   /**
-   * Saves updated profile bio/avatar
+   * Opens a modal showing the bookings for a specific venue
+   */
+  async function openBookingModal(venue: Venue) {
+    try {
+      const res = await getVenueById(venue.id);
+      const venueWithBookings = res.data;
+      const bookings = venueWithBookings.bookings || [];
+
+      setModalVenueName(venue.name);
+      setModalBookings(bookings);
+      setModalVenueId(venue.id);
+    } catch (err: any) {
+      console.error("Failed to fetch bookings for venue:", err.message);
+    }
+  }
+
+  /**
+   * Saves updated profile bio/avatar/banner
    */
   async function handleProfileUpdate(e: React.FormEvent) {
     e.preventDefault();
     try {
-      await updateProfile(name, { bio, avatar: { url: avatarUrl } });
+      await updateProfile(name, {
+        bio,
+        avatar: { url: avatarUrl },
+        banner: { url: bannerUrl },
+      });
+
       alert("Profile updated!");
 
-      const updatedUser = { ...user, bio, avatar: { url: avatarUrl } };
+      const updatedUser = {
+        ...user,
+        bio,
+        avatar: { url: avatarUrl },
+        banner: { url: bannerUrl },
+      };
       localStorage.setItem("user", JSON.stringify(updatedUser));
       window.location.reload();
     } catch (err: any) {
@@ -79,18 +87,19 @@ export default function ProfilePage() {
   return (
     <div className="space-y-12">
       <ProfileHeader
-  avatarUrl={user?.avatar?.url || ""}
-  name={user?.name || ""}
-  bio={user?.bio || ""}
-  editButton={
-    <button
-      onClick={() => setShowEdit(true)}
-      className="px-4 py-2 bg-blue-200 text-black rounded hover:bg-blue-300 text-sm absolute top-4 right-4"
-    >
-      Edit Profile
-    </button>
-  }
-/>
+        avatarUrl={user?.avatar?.url || ""}
+        bannerUrl={user?.banner?.url || ""}
+        name={user?.name || ""}
+        bio={user?.bio || ""}
+        editButton={
+          <button
+            onClick={() => setShowEdit(true)}
+            className="px-4 py-2 bg-blue-200 text-black rounded hover:bg-blue-300 text-sm absolute top-4 right-4"
+          >
+            Edit Profile
+          </button>
+        }
+      />
 
       {/* Edit Profile Modal */}
       {showEdit && (
@@ -122,6 +131,15 @@ export default function ProfilePage() {
                   className="w-full border p-2 rounded"
                   value={avatarUrl}
                   onChange={(e) => setAvatarUrl(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Banner Image URL</label>
+                <input
+                  type="url"
+                  className="w-full border p-2 rounded"
+                  value={bannerUrl}
+                  onChange={(e) => setBannerUrl(e.target.value)}
                 />
               </div>
               <div className="flex justify-end gap-2">

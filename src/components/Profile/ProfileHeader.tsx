@@ -1,40 +1,44 @@
 import React from "react";
 
-/**
- * Props for the ProfileHeader component.
- */
 type ProfileHeaderProps = {
   avatarUrl: string;
   name: string;
   bio: string;
+  bannerUrl?: string;
   editButton?: React.ReactNode;
 };
 
 /**
- * Displays a user's profile banner, avatar, name, and bio.
- * Used at the top of a profile page to visually represent the logged-in user.
+ * Displays the user's banner, avatar, name, and bio.
  */
-export function ProfileHeader({ avatarUrl, name, bio, editButton }: ProfileHeaderProps) {
+export function ProfileHeader({ avatarUrl, name, bio, bannerUrl, editButton }: ProfileHeaderProps) {
   return (
-    <div className="relative">
+    <div className="bg-gray-100 rounded-xl overflow-hidden shadow-sm">
       {/* Banner */}
-      <div className="bg-gradient-to-r from-blue-400 to-blue-500 h-48 w-full relative">
+      <div className="relative">
+        <div className="w-full h-40 bg-blue-400 overflow-hidden">
+          {bannerUrl && (
+            <img
+              src={bannerUrl}
+              alt="Profile banner"
+              className="object-cover w-full h-full"
+            />
+          )}
+        </div>
+
+        {/* Avatar */}
+        <div className="absolute -bottom-12 left-6 w-24 h-24 rounded-full border-4 border-white overflow-hidden shadow-md bg-white">
+          <img src={avatarUrl} alt={`${name}'s avatar`} className="w-full h-full object-cover" />
+        </div>
+
+        {/* Edit button in top-right corner */}
         {editButton}
       </div>
 
-      {/* Avatar */}
-      <div className="absolute top-32 left-1/2 transform -translate-x-1/2">
-        <img
-          src={avatarUrl}
-          alt={`${name} avatar`}
-          className="w-28 h-28 rounded-full border-4 border-white object-cover"
-        />
-      </div>
-
-      {/* Name + Bio */}
-      <div className="mt-20 text-center px-4">
-        <h1 className="text-2xl font-bold">{name}</h1>
-        <p className="text-gray-700 mt-2">{bio}</p>
+      {/* Name & Bio */}
+      <div className="pt-16 pb-6 px-6">
+        <h2 className="text-xl font-semibold">{name}</h2>
+        <p className="text-gray-600 text-sm mt-1">{bio}</p>
       </div>
     </div>
   );

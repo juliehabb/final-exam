@@ -10,6 +10,9 @@ export type UpdateProfileData = {
     url: string;
     alt?: string;
   };
+  banner?: {
+    url: string;
+  }
 };
 
 /**
