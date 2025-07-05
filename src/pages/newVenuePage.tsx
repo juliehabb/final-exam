@@ -12,47 +12,48 @@ import type { NewVenueData } from "../api/holidaze/venues";
 export default function NewVenuePage() {
     const navigate = useNavigate();
     const { createVenue, loading, error } = useCreateVenue();
-    // Input states for venue fields
     const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [mediaUrl, setMediaUrl] = useState("");
-    const [mediaAlt, setMediaAlt] = useState("");
-    const [price, setPrice] = useState(0);
-    const [maxGuests, setMaxGuests] = useState(1);
-    const [wifi, setWifi] = useState(false);
-    const [parking, setParking]  = useState(false);
-    const [breakfast, setBreakfast]  = useState(false);
-    const [pets, setPets] = useState(false);
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [zip, setZip] = useState("");
-    const [country, setCountry] = useState("");
+  const [description, setDescription] = useState("");
+  const [mediaUrls, setMediaUrls] = useState(["", "", "", "", ""]);
+  const [price, setPrice] = useState(0);
+  const [maxGuests, setMaxGuests] = useState(1);
+  const [wifi, setWifi] = useState(false);
+  const [parking, setParking] = useState(false);
+  const [breakfast, setBreakfast] = useState(false);
+  const [pets, setPets] = useState(false);
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [zip, setZip] = useState("");
+  const [country, setCountry] = useState("");
 
     /**
    * Submits form data to create a new venue.
    */
         async function handleSubmit(e: FormEvent) {
         e.preventDefault();
-        const payload: NewVenueData = {
-            name,
-            description,
-            media: mediaUrl 
-            ? [{url: mediaUrl,alt: mediaAlt || "" }] 
-            : [],
-            price,
-            maxGuests,
-            rating: 0,
-            meta: { wifi, parking, breakfast, pets },
-            location: {address, city, zip, country},
-        };
 
-        try {
-            await createVenue(payload);
-            navigate("/profile");
-        } catch (err:any) { 
-            console.error("Failed to create venue:", err);
-        }
+    const media = mediaUrls
+      .filter((url) => url.trim() !== "")
+      .map((url) => ({ url, alt: name }));
+
+    const payload: NewVenueData = {
+      name,
+      description,
+      media,
+      price,
+      maxGuests,
+      rating: 0,
+      meta: { wifi, parking, breakfast, pets },
+      location: { address, city, zip, country },
+    };
+
+    try {
+      await createVenue(payload);
+      navigate("/profile");
+    } catch (err: any) {
+      console.error("Failed to create venue:", err);
     }
+  }
 
 
  return (
@@ -92,13 +93,21 @@ export default function NewVenuePage() {
         </div>
 
         <div>
-          <label className="block font-medium mb-1">Image URL</label>
-          <input
-            className="w-full px-4 py-2 border rounded"
-            value={mediaUrl}
-            onChange={(e) => setMediaUrl(e.target.value)}
-            placeholder="Image URL"
-          />
+          <label className="block text-sm font-medium mb-2">Image URLs (up to 5)</label>
+          {mediaUrls.map((url, index) => (
+            <input
+              key={index}
+              type="url"
+              placeholder={`Image ${index + 1}`}
+              className="w-full border p-2 rounded mb-2"
+              value={url}
+              onChange={(e) => {
+                const updated = [...mediaUrls];
+                updated[index] = e.target.value;
+                setMediaUrls(updated);
+              }}
+            />
+          ))}
         </div>
 
         <div className="flex gap-2">
