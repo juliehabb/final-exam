@@ -117,14 +117,11 @@ useEffect(() => {
   return (
     <>
       <main className="p-4">
-  {/* Top search bar across full width */}
   <div className="max-w-full mb-6">
     <SearchBar value={searchTerm} onChange={setSearchTerm} />
   </div>
 
-  {/* Layout: Sidebar + Grid */}
   <section className="flex gap-4">
-    {/* Sidebar aligned with grid */}
     <div className="pt-10">
       <SideBar />
     </div>
