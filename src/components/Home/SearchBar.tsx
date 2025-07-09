@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 type Props = {
   /** The current text value of the search input */
@@ -16,7 +18,7 @@ export default function SearchBar({ value, onChange }: Props) {
       <div className="flex">
         <div className="relative flex-grow">
           <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-            🔍
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
           </span>
           <input
             type="text"
