@@ -9,9 +9,7 @@ import { useVenue } from "../hooks/useVenue";
  * It fetches the venue data using the venue ID from the URL.
  */
 export default function VenuePage() {
-  // Get venue ID from route parameters
     const { id } = useParams<{ id: string }>();
-    // Fetch venue details using the custom hook
     const { venue, loading, error } = useVenue(id!);
   
     if (loading) return <p>Loading venue…</p>;
