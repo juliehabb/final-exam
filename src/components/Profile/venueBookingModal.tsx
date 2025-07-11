@@ -39,11 +39,11 @@ export function VenueBookingModal({ venueName, bookings, onClose }: Props) {
     });
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center ">
-            <div className="bg-white p-6 rounded-xl max-w-md w-full relative">
+        <div className="fixed inset-0 bg-black dark:text-white  bg-opacity-50 z-50 flex items-center justify-center ">
+            <div className="bg-white p-6 rounded-xl max-w-md w-full relative dark:bg-gray-700">
                 <button 
                 onClick={onClose}
-                className="absolute top-3 right-4 text-gray-500 hover:text-red-600"
+                className="absolute top-3 right-4 text-gray-700 dark:text-white  hover:text-red-600"
                 > 
                 x
                 </button>

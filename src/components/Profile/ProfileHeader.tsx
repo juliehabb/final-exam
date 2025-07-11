@@ -13,7 +13,7 @@ type ProfileHeaderProps = {
  */
 export function ProfileHeader({ avatarUrl, name, bio, bannerUrl, editButton }: ProfileHeaderProps) {
   return (
-    <div className="bg-gray-100 overflow-hidden shadow-sm">
+    <div className="bg-gray-100 overflow-hidden shadow-sm dark:bg-gray-700 dark:text-white">
       {/* Banner */}
       <div className="relative">
         <div className="w-full h-40 bg-blue-400 overflow-hidden">
@@ -36,9 +36,9 @@ export function ProfileHeader({ avatarUrl, name, bio, bannerUrl, editButton }: P
       </div>
 
       {/* Name & Bio */}
-      <div className="pt-16 pb-6 px-6 text-center">
+      <div className="pt-16 pb-6 px-6 text-center ">
         <h2 className="text-xl font-semibold">{name}</h2>
-        <p className="text-gray-600 text-sm mt-1">{bio}</p>
+        <p className="text-gray-600 text-sm mt-1 dark:text-white">{bio}</p>
       </div>
     </div>
   );

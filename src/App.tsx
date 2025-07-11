@@ -13,9 +13,9 @@ import { Footer } from './components/footer';
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col dark:bg-gray-800">
       <NavBar />
-      <main className="flex-1">
+      <main className="flex-1 dark:bg-gray-800">
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/register' element={<RegisterPage />} />

@@ -57,10 +57,11 @@ export default function NewVenuePage() {
 
 
  return (
-    <div className="relative max-w-lg mx-auto mt-16 p-6 bg-white rounded-2xl shadow-lg space-y-4">
+  <main className="dark:bg-gray-800 dark:text-white pt-16 pb-16">
+    <div className="relative max-w-lg mx-auto  p-6 bg-white rounded-2xl shadow-lg space-y-4 dark:bg-gray-700">
         <button
          onClick={() => navigate(-1)}
-         className=" absolute top-4 right-4 text-2xl text-gray-500 hover:text-blue-500"
+         className=" absolute top-4 right-4 text-2xl text-gray-500 dark:text-white hover:text-blue-500"
         aria-label="Close create venue form"
          >
          ×
@@ -73,7 +74,7 @@ export default function NewVenuePage() {
         <div>
           <label className="block font-medium mb-1">Name</label>
           <input
-            className="w-full px-4 py-2 border rounded"
+            className="w-full dark:bg-gray-600 dark:border-transparent px-4 py-2 border rounded"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Venue name"
@@ -84,7 +85,7 @@ export default function NewVenuePage() {
         <div>
           <label className="block font-medium mb-1">Description</label>
           <textarea
-            className="w-full px-4 py-2 border rounded h-24"
+            className="w-full px-4 py-2 border rounded h-24 dark:bg-gray-600 dark:border-transparent"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Description"
@@ -99,7 +100,7 @@ export default function NewVenuePage() {
               key={index}
               type="url"
               placeholder={`Image ${index + 1}`}
-              className="w-full border p-2 rounded mb-2"
+              className="w-full border p-2 rounded mb-2 dark:bg-gray-600 dark:border-transparent"
               value={url}
               onChange={(e) => {
                 const updated = [...mediaUrls];
@@ -114,7 +115,7 @@ export default function NewVenuePage() {
           <div className="flex-1">
             <label className="block font-medium mb-1">Price</label>
             <input
-              className="w-full px-4 py-2 border rounded"
+              className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
               type="number"
               value={price}
               onChange={(e) => setPrice(+e.target.value)}
@@ -125,7 +126,7 @@ export default function NewVenuePage() {
           <div className="flex-1">
             <label className="block font-medium mb-1">Max Guests</label>
             <input
-              className="w-full px-4 py-2 border rounded"
+              className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
               type="number"
               value={maxGuests}
               onChange={(e) => setMaxGuests(+e.target.value)}
@@ -156,7 +157,7 @@ export default function NewVenuePage() {
         <div>
           <label className="block font-medium mb-1">Address</label>
           <input
-            className="w-full px-4 py-2 border rounded"
+            className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             placeholder="Address"
@@ -168,7 +169,7 @@ export default function NewVenuePage() {
           <div className="flex-1">
             <label className="block font-medium mb-1">City</label>
             <input
-              className="w-full px-4 py-2 border rounded"
+              className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
               value={city}
               onChange={(e) => setCity(e.target.value)}
               placeholder="City"
@@ -178,7 +179,7 @@ export default function NewVenuePage() {
           <div className="flex-1">
             <label className="block font-medium mb-1">ZIP Code</label>
             <input
-              className="w-full px-4 py-2 border rounded"
+              className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
               value={zip}
               onChange={(e) => setZip(e.target.value)}
               placeholder="ZIP"
@@ -190,7 +191,7 @@ export default function NewVenuePage() {
         <div>
           <label className="block font-medium mb-1">Country</label>
           <input
-            className="w-full px-4 py-2 border rounded"
+            className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             placeholder="Country"
@@ -207,5 +208,7 @@ export default function NewVenuePage() {
         </button>
       </form>
     </div>
+  </main>
+    
   );
 }

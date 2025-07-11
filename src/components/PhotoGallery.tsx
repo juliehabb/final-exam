@@ -24,7 +24,7 @@ export default function PhotoGallery({ images }: PhotoGalleryProps) {
   const thumbnails = Array.from({ length: 4 }, (_, i) => images[i + 1]);
 
   return (
-    <div className="p-6 w-full">
+    <div className="p-6 w-full ">
       <div className="flex flex-col lg:flex-row gap-4 rounded-2xl overflow-hidden">
         {/* Large main image */}
         <div

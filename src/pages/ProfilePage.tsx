@@ -85,7 +85,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="space-y-12">
+    <div className="space-y-12 dark:bg-gray-800">
       <ProfileHeader
         avatarUrl={user?.avatar?.url || ""}
         bannerUrl={user?.banner?.url || ""}
@@ -103,10 +103,10 @@ export default function ProfilePage() {
 
       {/* Edit Profile Modal */}
       {showEdit && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-6 relative">
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center ">
+          <div className="bg-white rounded-xl shadow-lg max-w-md w-full p-6 relative dark:bg-gray-700 dark:text-white">
             <button
-              className="absolute top-3 right-3 text-gray-500 hover:text-red-500"
+              className="absolute top-3 right-3 text-gray-500 dark:text-white  hover:text-red-500"
               onClick={() => setShowEdit(false)}
               aria-label="Close"
             >
@@ -116,9 +116,9 @@ export default function ProfilePage() {
             <h2 className="text-xl font-semibold mb-4">Edit Profile</h2>
             <form onSubmit={handleProfileUpdate} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700">Bio</label>
+                <label className="block text-sm font-medium text-gray-700 ">Bio</label>
                 <textarea
-                  className="w-full border p-2 rounded"
+                  className="w-full border p-2 rounded dark:bg-gray-600 dark:border-transparent"
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                   rows={3}
@@ -128,7 +128,7 @@ export default function ProfilePage() {
                 <label className="block text-sm font-medium text-gray-700">Avatar URL</label>
                 <input
                   type="url"
-                  className="w-full border p-2 rounded"
+                  className="w-full border p-2 rounded dark:bg-gray-600 dark:border-transparent"
                   value={avatarUrl}
                   onChange={(e) => setAvatarUrl(e.target.value)}
                 />
@@ -137,7 +137,7 @@ export default function ProfilePage() {
                 <label className="block text-sm font-medium text-gray-700">Banner Image URL</label>
                 <input
                   type="url"
-                  className="w-full border p-2 rounded"
+                  className="w-full border p-2 rounded dark:bg-gray-600 dark:border-transparent"
                   value={bannerUrl}
                   onChange={(e) => setBannerUrl(e.target.value)}
                 />
@@ -155,9 +155,9 @@ export default function ProfilePage() {
         </div>
       )}
 
-      <div className="flex flex-col lg:flex-row gap-8 px-4 sm:px-6 lg:px-8">
+      <div className="flex flex-col lg:flex-row gap-8 px-4 sm:px-6 lg:px-8 ">
         {/* Bookings Panel */}
-        <Panel title="Your bookings">
+        <Panel title="Your bookings"   >
           {profileLoading && <p>Loading bookings…</p>}
           {profileError && <p className="text-red-500">Error: {profileError}</p>}
 
@@ -174,13 +174,13 @@ export default function ProfilePage() {
                   <>
                     <button
                       onClick={() => alert("Edit functionality not implemented")}
-                      className="text-blue-600 hover:underline text-sm mr-4"
+                      className="text-blue-600 hover:underline text-sm mr-4 dark:text-blue-100"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => setCancelBookingId(b.id)}
-                      className="text-red-600 hover:underline text-sm"
+                      className="text-red-600 hover:underline text-sm  dark:text-red-400"
                     >
                       Cancel
                     </button>
@@ -206,7 +206,7 @@ export default function ProfilePage() {
 
           {!venueLoading && !venueError && myVenues.length === 0 && (
             user?.venueManager ? (
-              <p className="text-gray-500">You haven’t created any venues yet.</p>
+              <p className="text-gray-500 dark:text-gray-50">You haven’t created any venues yet.</p>
             ) : (
               <p className="text-sm text-gray-500 italic">
                 Only venue managers can create venues. <a href="#" className="underline">Become a manager</a>
@@ -224,14 +224,14 @@ export default function ProfilePage() {
                 subtitle=""
                 actions={
                   <>
-                    <button onClick={() => openBookingModal(v)} className="text-sm text-indigo-600 hover:underline">
+                    <button onClick={() => openBookingModal(v)} className="text-sm pr-2 text-indigo-600 dark:text-indigo-200 hover:underline">
                       View Bookings
                     </button>
                     <Link to={`/venues/${v.id}/edit`} aria-label="Edit">
-                      <FaEdit className="text-gray-600 hover:text-accent" />
+                      <FaEdit className="text-gray-600 dark:text-gray-100 hover:text-accent" />
                     </Link>
                     <button onClick={() => setConfirmDeleteId(v.id)} aria-label="Delete">
-                      <FaTrash className="text-gray-600 hover:text-red-500" />
+                      <FaTrash className="text-gray-600 dark:text-red-300 hover:text-red-500" />
                     </button>
                   </>
                 }

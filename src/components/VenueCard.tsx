@@ -31,7 +31,7 @@ export default function VenueCard({
   return (
     <Link
   to={`/venue/${id}`}
-  className="w-full bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition"
+  className="w-full bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition dark:bg-gray-700"
 >
   {image ? (
     <img
@@ -45,7 +45,7 @@ export default function VenueCard({
     </div>
   )}
 
-  <div className="p-6">
+  <div className="p-6 dark:bg-gray-700">
     <div className="flex items-center justify-between mb-1">
       <h2 className="text-2xl font-bold">{title}</h2>
       <div className="flex items-center gap-1">
@@ -53,7 +53,7 @@ export default function VenueCard({
         <span className="text-yellow-400 text-lg">★</span>
       </div>
     </div>
-    <div className="text-gray-500 mb-4">{location}</div>
+    <div className="text-gray-500 mb-4 dark:text-gray-400">{location}</div>
     <div className="flex flex-wrap gap-3 mb-5">
       {amenities.map((amenity) => (
         <div
@@ -65,7 +65,7 @@ export default function VenueCard({
       ))}
     </div>
     <div className="flex items-end gap-1">
-      <span className="text-gray-500 text-lg">Per day:</span>
+      <span className="text-gray-500 dark:text-gray-400 text-lg">Per day:</span>
       <span className="text-2xl font-bold">${price}</span>
     </div>
   </div>

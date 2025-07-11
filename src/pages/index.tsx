@@ -121,7 +121,7 @@ export default function HomePage() {
   }
 
   return (
-    <main className="p-4">
+    <main className="p-4 dark:bg-gray-800 dark:text-white">
       <div className="max-w-full mb-6">
         <SearchBar value={searchTerm} onChange={setSearchTerm} />
       </div>
@@ -159,7 +159,7 @@ export default function HomePage() {
               {/* Pagination controls */}
               <div className="flex justify-center gap-4 mt-6">
                 <button
-                  className="px-4 py-2 bg-gray-200 rounded"
+                  className="px-4 py-2 bg-gray-200 rounded dark:bg-gray-600"
                   onClick={() => goToPage(currentPage - 1)}
                   disabled={currentPage === 1}
                 >
@@ -169,7 +169,7 @@ export default function HomePage() {
                   <button
                     key={i}
                     className={`px-3 py-1 rounded ${
-                      currentPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-100"
+                      currentPage === i + 1 ? "bg-blue-500 text-white" : "bg-gray-100 dark:bg-gray-600"
                     }`}
                     onClick={() => goToPage(i + 1)}
                   >
@@ -177,7 +177,7 @@ export default function HomePage() {
                   </button>
                 ))}
                 <button
-                  className="px-4 py-2 bg-gray-200 rounded"
+                  className="px-4 py-2 bg-gray-200 rounded dark:bg-gray-600"
                   onClick={() => goToPage(currentPage + 1)}
                   disabled={currentPage === totalPages}
                 >
