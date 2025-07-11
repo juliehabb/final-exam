@@ -71,7 +71,7 @@ const NavBar = () => {
           />
         </div>
 
-        <Link to="/favorites" aria-label="Favorites">
+        <Link to="" aria-label="Favorites">
           <FaRegHeart size={22} />
         </Link>
 
