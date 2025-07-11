@@ -17,7 +17,7 @@ export default function VenuePage() {
     if (!venue)  return <p>Venue not found</p>;
   
     return (
-      <main className="max-w-5xl mx-auto px-4 mt-11 sm:px-6 lg:px-8 space-y-6">
+      <main className="max-w-5xl mx-auto px-4 mt-11 sm:px-6 lg:px-8 space-y-6 dark:bg-gray-800">
         <PhotoGallery images={venue.media.map((m) => m.url)} />
         <VenueDetails venue={venue} />
       </main>

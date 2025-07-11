@@ -14,10 +14,10 @@ type Props = {
  */
 export default function SearchBar({ value, onChange }: Props) {
   return (
-    <div className="mb-4 mt-6 w-1/2">
-      <div className="flex">
+    <div className="mb-4 mt-6 w-1/2 ">
+      <div className="flex  ">
         <div className="relative flex-grow">
-          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400  ">
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </span>
           <input
@@ -25,7 +25,7 @@ export default function SearchBar({ value, onChange }: Props) {
             placeholder="Search for venues..."
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            className="w-full p-3 pl-10 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="w-full p-3 pl-10 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-400 dark:bg-gray-600 dark:border-transparent"
           />
         </div>
         <button

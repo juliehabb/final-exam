@@ -127,18 +127,18 @@ export default function VenueDetails({ venue }: VenueDetailsProps) {
   
 
   return (
-    <main className="p-6 space-y-6">
+    <main className="p-6 space-y-6 pb-12">
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Venue Info */}
-        <div className="bg-white p-6 rounded-2xl shadow-lg flex-1">
+        <div className="bg-white p-6 rounded-2xl shadow-lg flex-1 dark:bg-gray-700 dark:text-white">
           <h1 className="text-2xl font-bold">{name}</h1>
           <span className="text-xl font-semibold">
-            ${price} <span className="text-gray-500 text-base">per day</span>
+            ${price} <span className="text-gray-500 text-base dark:text-gray-300">per day</span>
           </span>
-          <div className="text-gray-600 my-2">
+          <div className="text-gray-600 dark:text-gray-300 my-2">
             {location.address}, {location.city}
           </div>
-          <p className="text-gray-700 my-4">{description}</p>
+          <p className="text-gray-700 dark:text-gray-300 my-4">{description}</p>
 
           <div className="mt-4">
             <h3 className="font-semibold">Offers</h3>
@@ -163,11 +163,11 @@ export default function VenueDetails({ venue }: VenueDetailsProps) {
         </div>
 
         {/* Booking Section */}
-        <div className="bg-white p-6 rounded-2xl shadow-lg flex-1">
+        <div className="bg-white p-6 rounded-2xl shadow-lg flex-1 dark:bg-gray-700 dark:text-white">
           <h2 className="text-xl font-semibold mb-4">Book your stay</h2>
 
           <div className="mb-4">
-            <label className="block mb-1 text-sm font-medium text-gray-700">Check-in</label>
+            <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-white">Check-in</label>
             <DatePicker
               selected={startDate}
               onChange={(date) => setStartDate(date)}
@@ -181,7 +181,7 @@ export default function VenueDetails({ venue }: VenueDetailsProps) {
           </div>
 
           <div className="mb-6">
-            <label className="block mb-1 text-sm font-medium text-gray-700">Check-out</label>
+            <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-white">Check-out</label>
             <DatePicker
               selected={endDate}
               onChange={(date) => setEndDate(date)}
@@ -199,14 +199,14 @@ export default function VenueDetails({ venue }: VenueDetailsProps) {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setPeople((p) => Math.max(1, p - 1))}
-                className="w-8 h-8 bg-gray-200 rounded"
+                className="w-8 h-8 bg-gray-200 dark:bg-gray-500 rounded"
               >
                 −
               </button>
               <span>{people}</span>
               <button
                 onClick={() => setPeople((p) => p + 1)}
-                className="w-8 h-8 bg-gray-200 rounded"
+                className="w-8 h-8 bg-gray-200 dark:bg-gray-500 rounded"
               >
                 +
               </button>

@@ -62,7 +62,8 @@ export default function EditVenuePage() {
   if (!venue) return null;
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white rounded-xl shadow-lg space-y-4 relative">
+    <main className="dark:bg-gray-800 dark:text-white pt-16 pb-16">
+      <div className="max-w-lg mx-auto p-6 bg-white rounded-xl dark:bg-gray-700  shadow-lg space-y-4 relative">
       <button
         onClick={() => navigate(-1)}
         className="absolute top-4 right-4 text-2xl text-gray-500 hover:text-red-500"
@@ -77,7 +78,7 @@ export default function EditVenuePage() {
         <div>
           <label className="block font-medium text-sm mb-1">Name</label>
           <input
-            className="w-full px-4 py-2 border rounded"
+            className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
             value={venue.name}
             onChange={(e) => setVenue({ ...venue, name: e.target.value })}
             placeholder="Venue name"
@@ -88,7 +89,7 @@ export default function EditVenuePage() {
         <div>
           <label className="block font-medium text-sm mb-1">Description</label>
           <textarea
-            className="w-full px-4 py-2 border rounded h-24"
+            className="w-full px-4 py-2 border rounded h-24 dark:bg-gray-600 dark:border-transparent"
             value={venue.description}
             onChange={(e) => setVenue({ ...venue, description: e.target.value })}
             placeholder="Description"
@@ -99,7 +100,7 @@ export default function EditVenuePage() {
         <div>
           <label className="block font-medium text-sm mb-1">Image URL</label>
           <input
-            className="w-full px-4 py-2 border rounded"
+            className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
             value={venue.media[0]?.url || ""}
             onChange={(e) =>
               setVenue({
@@ -115,7 +116,7 @@ export default function EditVenuePage() {
           <div className="flex-1">
             <label className="block font-medium text-sm mb-1">Price</label>
             <input
-              className="w-full px-4 py-2 border rounded"
+              className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
               type="number"
               value={venue.price}
               onChange={(e) => setVenue({ ...venue, price: +e.target.value })}
@@ -125,7 +126,7 @@ export default function EditVenuePage() {
           <div className="flex-1">
             <label className="block font-medium text-sm mb-1">Guests</label>
             <input
-              className="w-full px-4 py-2 border rounded"
+              className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
               type="number"
               value={venue.maxGuests}
               onChange={(e) => setVenue({ ...venue, maxGuests: +e.target.value })}
@@ -158,7 +159,7 @@ export default function EditVenuePage() {
         <div>
           <label className="block font-medium text-sm mb-1">Address</label>
           <input
-            className="w-full px-4 py-2 border rounded"
+            className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
             value={venue.location.address}
             onChange={(e) =>
               setVenue({ ...venue, location: { ...venue.location, address: e.target.value } })
@@ -171,7 +172,7 @@ export default function EditVenuePage() {
           <div className="flex-1">
             <label className="block font-medium text-sm mb-1">City</label>
             <input
-              className="w-full px-4 py-2 border rounded"
+              className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
               value={venue.location.city}
               onChange={(e) =>
                 setVenue({ ...venue, location: { ...venue.location, city: e.target.value } })
@@ -182,7 +183,7 @@ export default function EditVenuePage() {
           <div className="flex-1">
             <label className="block font-medium text-sm mb-1">ZIP</label>
             <input
-              className="w-full px-4 py-2 border rounded"
+              className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
               value={venue.location.zip}
               onChange={(e) =>
                 setVenue({ ...venue, location: { ...venue.location, zip: e.target.value } })
@@ -195,7 +196,7 @@ export default function EditVenuePage() {
         <div>
           <label className="block font-medium text-sm mb-1">Country</label>
           <input
-            className="w-full px-4 py-2 border rounded"
+            className="w-full px-4 py-2 border rounded dark:bg-gray-600 dark:border-transparent"
             value={venue.location.country}
             onChange={(e) =>
               setVenue({ ...venue, location: { ...venue.location, country: e.target.value } })
@@ -212,6 +213,8 @@ export default function EditVenuePage() {
         </button>
       </form>
     </div>
+    </main>
+    
   );
 }
 

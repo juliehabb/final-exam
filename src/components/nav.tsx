@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaRegHeart, FaUser, FaTimes, FaBars } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -12,8 +12,26 @@ import { useNavigate } from "react-router-dom";
  */
 const NavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem("theme") === "dark";
+  });
+
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem("user") || "null");
+
+  /**
+   *   Sync dark mode with <html> element 
+   */
+  useEffect(() => {
+    const html = document.documentElement;
+    if (isDarkMode) {
+      html.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      html.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDarkMode]);
 
   
   /**
@@ -27,7 +45,7 @@ const NavBar = () => {
   }
 
   return (
-    <nav className="bg-white shadow px-4 sm:px-6 py-4 flex items-center justify-between relative">
+    <nav className="bg-white dark:bg-gray-800 text-gray-800 dark:text-white shadow px-4 sm:px-6 py-4 flex items-center justify-between relative">
       {/* Logo */}
       <Link to="/" aria-label="Home">
         <h3 className="font-bold">Holidaze</h3>
@@ -37,24 +55,22 @@ const NavBar = () => {
       <div className="hidden sm:flex items-center gap-8">
         {/* Theme color circles */}
         <div className="flex gap-2">
-          <span
-            className="rounded-full inline-block"
-            style={{ width: 20, height: 20, background: "#eee" }}
+          <button
+            onClick={() => setIsDarkMode(false)}
+            className={`w-5 h-5 rounded-full bg-white border border-gray-300 ${
+              !isDarkMode ? "ring-2 ring-blue-400" : ""
+            }`}
             aria-label="Light Theme"
           />
-          <span
-            className="rounded-full inline-block"
-            style={{ width: 20, height: 20, background: "#222" }}
+          <button
+            onClick={() => setIsDarkMode(true)}
+            className={`w-5 h-5 rounded-full bg-gray-800 ${
+              isDarkMode ? "ring-2 ring-blue-400" : ""
+            }`}
             aria-label="Dark Theme"
-          />
-          <span
-            className="rounded-full inline-block"
-            style={{ width: 20, height: 20, background: "#A8D8E8" }}
-            aria-label="Blue Theme"
           />
         </div>
 
-        {/* Right-side links/icons */}
         <Link to="/favorites" aria-label="Favorites">
           <FaRegHeart size={22} />
         </Link>
@@ -66,7 +82,7 @@ const NavBar = () => {
             </Link>
             <button
               onClick={handleLogout}
-              className="text-gray-600 hover:text-red-500 font-semibold"
+              className="text-gray-600 dark:text-white hover:text-red-500 font-semibold"
             >
               Logout
             </button>
@@ -74,14 +90,14 @@ const NavBar = () => {
         ) : (
           <Link
             to="/login"
-            className="text-gray-600 hover:text-indigo-500 font-semibold"
+            className="text-gray-600 dark:text-white hover:text-indigo-500 font-semibold"
           >
             Log in
           </Link>
         )}
       </div>
 
-      {/* Hamburger Button - Mobile Only */}
+      {/* Mobile Menu Toggle */}
       <button
         className="sm:hidden ml-auto z-20"
         onClick={() => setMenuOpen((open) => !open)}
@@ -92,12 +108,22 @@ const NavBar = () => {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="absolute top-full left-0 w-full bg-white shadow-md flex flex-col items-center gap-6 py-6 sm:hidden z-10">
-          {/* Theme circles */}
+        <div className="absolute top-full left-0 w-full bg-white dark:bg-gray-900 shadow-md flex flex-col items-center gap-6 py-6 sm:hidden z-10">
           <div className="flex gap-3">
-            <span className="rounded-full inline-block" style={{ width: 20, height: 20, background: "#eee" }} />
-            <span className="rounded-full inline-block" style={{ width: 20, height: 20, background: "#222" }} />
-            <span className="rounded-full inline-block" style={{ width: 20, height: 20, background: "#A8D8E8" }} />
+            <button
+              onClick={() => setIsDarkMode(false)}
+              className={`w-5 h-5 rounded-full bg-white border ${
+                !isDarkMode ? "ring-2 ring-blue-400" : ""
+              }`}
+              aria-label="Light Theme"
+            />
+            <button
+              onClick={() => setIsDarkMode(true)}
+              className={`w-5 h-5 rounded-full bg-gray-800 ${
+                isDarkMode ? "ring-2 ring-blue-400" : ""
+              }`}
+              aria-label="Dark Theme"
+            />
           </div>
 
           <Link to="/favorites" aria-label="Favorites" onClick={() => setMenuOpen(false)}>
@@ -114,7 +140,7 @@ const NavBar = () => {
                   handleLogout();
                   setMenuOpen(false);
                 }}
-                className="text-gray-600 hover:text-red-500 font-semibold"
+                className="text-gray-600 dark:text-white hover:text-red-500 font-semibold"
               >
                 Logout
               </button>
@@ -123,7 +149,7 @@ const NavBar = () => {
             <Link
               to="/login"
               onClick={() => setMenuOpen(false)}
-              className="text-gray-600 hover:text-indigo-500 font-semibold"
+              className="text-gray-600 dark:text-white hover:text-indigo-500 font-semibold"
             >
               Log in
             </Link>
